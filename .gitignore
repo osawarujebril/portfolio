@@ -1,5 +1,7 @@
 .env
 .env.*
-*.pdf
+# Allow PDFs in specific project folders
+# (blocked globally to prevent accidental CV uploads)
+!claude-code-setup-guide/*.pdf
 __pycache__/
 .DS_Store
