@@ -16,8 +16,6 @@ Python tool that injects click-to-reveal animations into PowerPoint presentation
 ### [AI Image Generator](./ai-image-generator/)
 Python scripts that interface with the Kie.ai API to generate hyper-realistic AI images from structured JSON prompts. Supports image generation, editing, and image-to-video conversion.
 
-### [PDF Builder System](./pdf-builder-system/)
-Automated professional PDF generation system for CVs, reports, and business documents. Uses Python ReportLab with custom styling, color palettes, and ATS-optimized layouts.
 
 ## About
 
@@ -26,5 +24,4 @@ I am a DVM student at the University of Life Sciences in Lublin, Poland (graduat
 ## Contact
 
 - Email: osawarujebril@gmail.com
-- Phone: +48 785 660 596
 - Location: Lublin, Poland
