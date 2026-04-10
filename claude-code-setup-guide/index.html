@@ -1,0 +1,1701 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Claude Code Complete Setup Guide — From Zero to Fully Loaded</title>
+<style>
+  @page { size: A4; margin: 2cm; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 11pt;
+    line-height: 1.6;
+    color: #1a1a2e;
+    background: #fff;
+    padding: 40px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  /* COVER */
+  .cover {
+    text-align: center;
+    padding: 80px 20px 60px;
+    page-break-after: always;
+    border-bottom: 4px solid #6c5ce7;
+  }
+  .cover h1 {
+    font-size: 32pt;
+    font-weight: 800;
+    color: #6c5ce7;
+    margin-bottom: 12px;
+    letter-spacing: -0.5px;
+  }
+  .cover .subtitle {
+    font-size: 16pt;
+    color: #636e72;
+    margin-bottom: 40px;
+  }
+  .cover .metaphor {
+    background: linear-gradient(135deg, #6c5ce7 0%, #a29bfe 100%);
+    color: white;
+    padding: 24px 32px;
+    border-radius: 12px;
+    font-size: 13pt;
+    line-height: 1.7;
+    max-width: 600px;
+    margin: 0 auto 40px;
+  }
+  .cover .version {
+    font-size: 10pt;
+    color: #b2bec3;
+  }
+
+  /* HEADINGS */
+  h2 {
+    font-size: 18pt;
+    color: #6c5ce7;
+    border-bottom: 3px solid #6c5ce7;
+    padding-bottom: 6px;
+    margin: 36px 0 16px;
+    page-break-after: avoid;
+  }
+  h3 {
+    font-size: 14pt;
+    color: #2d3436;
+    margin: 24px 0 10px;
+    page-break-after: avoid;
+  }
+  h4 {
+    font-size: 12pt;
+    color: #6c5ce7;
+    margin: 16px 0 8px;
+  }
+
+  /* CONTENT */
+  p { margin-bottom: 10px; }
+  ul, ol { margin: 8px 0 16px 24px; }
+  li { margin-bottom: 6px; }
+
+  /* CODE BLOCKS */
+  code {
+    background: #f1f0ff;
+    color: #6c5ce7;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-family: 'Fira Code', 'Cascadia Code', 'Consolas', monospace;
+    font-size: 10pt;
+  }
+  pre {
+    background: #1a1a2e;
+    color: #a29bfe;
+    padding: 16px 20px;
+    border-radius: 8px;
+    overflow-x: auto;
+    font-size: 9.5pt;
+    line-height: 1.5;
+    margin: 12px 0 20px;
+    page-break-inside: avoid;
+  }
+  pre code {
+    background: none;
+    color: inherit;
+    padding: 0;
+  }
+
+  /* CALLOUT BOXES */
+  .box {
+    padding: 16px 20px;
+    border-radius: 8px;
+    margin: 16px 0;
+    page-break-inside: avoid;
+  }
+  .box-purple {
+    background: #f1f0ff;
+    border-left: 4px solid #6c5ce7;
+  }
+  .box-orange {
+    background: #fff8f0;
+    border-left: 4px solid #e17055;
+  }
+  .box-green {
+    background: #f0fff4;
+    border-left: 4px solid #00b894;
+  }
+  .box-blue {
+    background: #f0f8ff;
+    border-left: 4px solid #0984e3;
+  }
+  .box-red {
+    background: #fff0f0;
+    border-left: 4px solid #d63031;
+  }
+  .box strong:first-child {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 11pt;
+  }
+
+  /* TABLES */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 12px 0 20px;
+    font-size: 10pt;
+    page-break-inside: avoid;
+  }
+  th {
+    background: #6c5ce7;
+    color: white;
+    text-align: left;
+    padding: 10px 12px;
+    font-weight: 600;
+  }
+  td {
+    padding: 8px 12px;
+    border-bottom: 1px solid #dfe6e9;
+  }
+  tr:nth-child(even) td { background: #f8f9fa; }
+
+  /* TREE DIAGRAM */
+  .tree {
+    background: #1a1a2e;
+    color: #dfe6e9;
+    padding: 20px 24px;
+    border-radius: 8px;
+    font-family: 'Fira Code', monospace;
+    font-size: 9pt;
+    line-height: 1.6;
+    margin: 12px 0 20px;
+    white-space: pre;
+    page-break-inside: avoid;
+  }
+  .tree .folder { color: #6c5ce7; font-weight: bold; }
+  .tree .file { color: #a29bfe; }
+  .tree .comment { color: #636e72; }
+
+  /* CHECKLIST */
+  .checklist {
+    list-style: none;
+    margin-left: 0;
+    padding-left: 0;
+  }
+  .checklist li {
+    padding: 6px 0 6px 28px;
+    position: relative;
+  }
+  .checklist li::before {
+    content: '☐';
+    position: absolute;
+    left: 0;
+    color: #6c5ce7;
+    font-size: 14pt;
+  }
+
+  /* STEP NUMBERS */
+  .step {
+    display: inline-block;
+    background: #6c5ce7;
+    color: white;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 28px;
+    font-weight: 700;
+    font-size: 13pt;
+    margin-right: 8px;
+    vertical-align: middle;
+  }
+
+  /* SECTION DIVIDER */
+  .divider {
+    border: none;
+    border-top: 2px dashed #dfe6e9;
+    margin: 30px 0;
+  }
+
+  /* PAGE BREAK */
+  .page-break { page-break-before: always; }
+
+  /* FOOTER */
+  .footer {
+    text-align: center;
+    color: #b2bec3;
+    font-size: 9pt;
+    margin-top: 40px;
+    padding-top: 16px;
+    border-top: 1px solid #dfe6e9;
+  }
+
+  /* TOC */
+  .toc { margin: 20px 0 40px; }
+  .toc a {
+    color: #6c5ce7;
+    text-decoration: none;
+    display: block;
+    padding: 4px 0;
+    border-bottom: 1px dotted #dfe6e9;
+  }
+  .toc a:hover { text-decoration: underline; }
+  .toc .indent { padding-left: 24px; }
+
+  .highlight { background: #fff3cd; padding: 2px 4px; border-radius: 3px; }
+</style>
+</head>
+<body>
+
+<!-- ============ COVER PAGE ============ -->
+<div class="cover">
+  <h1>Claude Code<br>Complete Setup Guide</h1>
+  <p class="subtitle">From Zero to Fully Loaded — The Full Reprogramming Manual</p>
+
+  <div class="metaphor">
+    Think of this like buying a brand-new PlayStation. Right now, it's just hardware — no games installed.
+    This guide is every game disc, every save file, every configuration — ready to plug in and play.
+  </div>
+
+  <p><strong>What This Guide Does:</strong><br>
+  Takes a fresh VS Code + Claude Code installation and transforms it into a fully-equipped
+  AI-powered production environment with 22+ specialized skills, 70+ knowledge files,
+  automation tools, and battle-tested workflows.</p>
+
+  <p class="version">Version 1.0 — April 2026<br>
+  Built from the VS-CODING VIA CLAUDE workspace</p>
+</div>
+
+<!-- ============ TABLE OF CONTENTS ============ -->
+<h2>Table of Contents</h2>
+<div class="toc">
+  <a href="#section0"><strong>SECTION 0:</strong> WINDOWS SETUP — Read This First If You're on Windows</a>
+  <a class="indent" href="#win-step1">Step 1: Install Node.js</a>
+  <a class="indent" href="#win-step2">Step 2: Install Git (with Git Bash)</a>
+  <a class="indent" href="#win-step3">Step 3: Fix the Git Bash PATH Error</a>
+  <a class="indent" href="#win-step4">Step 4: Install Python</a>
+  <a class="indent" href="#win-step5">Step 5: Install VS Code + Claude Code Extension</a>
+  <a class="indent" href="#win-step6">Step 6: Verify Everything Works</a>
+  <a href="#section1"><strong>Section 1:</strong> What You Need Before Starting (Prerequisites)</a>
+  <a href="#section2"><strong>Section 2:</strong> The Big Picture — What You're Building</a>
+  <a href="#section3"><strong>Section 3:</strong> Step-by-Step Setup</a>
+  <a class="indent" href="#step1">Step 1: Create Your Project Folder</a>
+  <a class="indent" href="#step2">Step 2: Build the Folder Structure</a>
+  <a class="indent" href="#step3">Step 3: Set Up the .claude/ Configuration</a>
+  <a class="indent" href="#step4">Step 4: Install All Skills</a>
+  <a class="indent" href="#step5">Step 5: Set Up API Keys</a>
+  <a class="indent" href="#step6">Step 6: Install Python Tools</a>
+  <a class="indent" href="#step7">Step 7: Create Your CLAUDE.md (Brain File)</a>
+  <a class="indent" href="#step8">Step 8: Set Up Knowledge Base</a>
+  <a class="indent" href="#step9">Step 9: Verify Everything Works</a>
+  <a href="#section4"><strong>Section 4:</strong> Complete Skills Reference (All 22+ Skills)</a>
+  <a href="#section5"><strong>Section 5:</strong> Complete Folder Structure Map</a>
+  <a href="#section6"><strong>Section 6:</strong> How the System Works (WAT Framework)</a>
+  <a href="#section7"><strong>Section 7:</strong> Configuration Files — Exact Contents</a>
+  <a href="#section8"><strong>Section 8:</strong> Troubleshooting & FAQs</a>
+  <a href="#section9"><strong>Section 9:</strong> Master Checklist</a>
+</div>
+
+<!-- ============ SECTION 0: WINDOWS SETUP ============ -->
+<div class="page-break"></div>
+<h2 id="section0" style="color: #d63031; border-bottom-color: #d63031;">SECTION 0: Windows Setup — Read This First If You're on Windows</h2>
+
+<div class="box box-red">
+  <strong>WINDOWS USERS: START HERE</strong>
+  Claude Code was originally built for Mac/Linux. On Windows, it needs Git Bash to work.
+  If you skip this section, you WILL get this error:<br><br>
+  <code style="background: #2d3436; color: #ff7675; padding: 8px 12px; display: block; border-radius: 4px; font-size: 9.5pt; margin-top: 8px;">
+  Claude Code on Windows requires Git Bash. If installed but not in the path,
+  set environment variable pointing to your bash.exe:
+  CLAUDE_CODE_GIT_BASH_PATH=C:\Program Files\Git\bin\bash.exe
+  </code>
+  <br>
+  Follow every step below IN ORDER. Do not skip any step.
+</div>
+
+<p>Mac users — skip to <a href="#section1">Section 1</a>.</p>
+
+<!-- WIN STEP 1 -->
+<h3 id="win-step1"><span class="step">1</span> Install Node.js (Required)</h3>
+
+<p>Claude Code runs on Node.js. You need version 18 or higher.</p>
+
+<h4>Download and Install:</h4>
+<ol>
+  <li>Go to <code>nodejs.org</code></li>
+  <li>Click the <strong>LTS</strong> (Long Term Support) button — this downloads the Windows installer (.msi file)</li>
+  <li>Run the installer</li>
+  <li>Click <strong>Next</strong> through all the screens. <strong>IMPORTANT:</strong> On the "Tools for Native Modules" screen, check the box that says <em>"Automatically install the necessary tools"</em> if it appears</li>
+  <li>Click <strong>Install</strong> and wait for it to finish</li>
+</ol>
+
+<h4>Verify it worked:</h4>
+<p>Open <strong>Command Prompt</strong> (press <code>Win + R</code>, type <code>cmd</code>, press Enter) and type:</p>
+<pre><code>node --version</code></pre>
+<p>You should see something like <code>v20.11.0</code> or higher. If you see an error, restart your computer and try again.</p>
+
+<p>Also check npm (Node's package manager):</p>
+<pre><code>npm --version</code></pre>
+<p>Should show a version number like <code>10.2.0</code>.</p>
+
+<div class="box box-green">
+  <strong>If node --version shows "not recognized"</strong>
+  Node wasn't added to your PATH. Restart your computer first. If it still doesn't work,
+  uninstall Node.js, re-download, and during installation make sure the
+  "Add to PATH" checkbox is checked.
+</div>
+
+<!-- WIN STEP 2 -->
+<hr class="divider">
+<h3 id="win-step2"><span class="step">2</span> Install Git (with Git Bash) — THIS IS THE KEY STEP</h3>
+
+<p>This is where most people get stuck. Claude Code on Windows <strong>requires Git Bash</strong> — it's a Linux-like terminal that comes bundled with Git.</p>
+
+<h4>Download and Install:</h4>
+<ol>
+  <li>Go to <code>git-scm.com</code></li>
+  <li>Click <strong>"Download for Windows"</strong> — it will auto-detect 32-bit or 64-bit</li>
+  <li>Run the installer (.exe file)</li>
+  <li><strong>CRITICAL SCREENS during installation — pay attention to these:</strong></li>
+</ol>
+
+<div class="box box-red">
+  <strong>Installation Screen: "Adjusting your PATH environment"</strong>
+  You will see 3 options. Select the <strong>SECOND option</strong>:<br><br>
+  <code style="display: block; background: #2d3436; color: #55efc4; padding: 12px; border-radius: 4px; margin: 8px 0;">
+  ( ) Git from Git Bash only<br>
+  (x) Git from the command line and also from 3rd-party software  &lt;-- SELECT THIS ONE<br>
+  ( ) Use Git and optional Unix tools from the Command Prompt
+  </code>
+  <br>
+  This adds Git (and Git Bash) to your system PATH — which is exactly what Claude Code needs.
+</div>
+
+<div class="box box-purple">
+  <strong>Installation Screen: "Choosing the default editor"</strong>
+  Select <strong>"Use Visual Studio Code as Git's default editor"</strong> if you see it.
+  If not, any option is fine — this doesn't affect Claude Code.
+</div>
+
+<div class="box box-blue">
+  <strong>Installation Screen: "Configuring the terminal emulator"</strong>
+  Select: <strong>"Use Windows' default console window"</strong><br>
+  (Either option works, but this one causes fewer issues.)
+</div>
+
+<ol start="5">
+  <li>Click <strong>Next</strong> through the remaining screens (defaults are fine)</li>
+  <li>Click <strong>Install</strong> and wait for it to finish</li>
+  <li><strong>IMPORTANT: Check "Launch Git Bash"</strong> at the end to make sure it opens</li>
+</ol>
+
+<h4>Verify it worked:</h4>
+<p>Open a <strong>NEW</strong> Command Prompt (close any old ones first) and type:</p>
+<pre><code>git --version</code></pre>
+<p>Should show something like <code>git version 2.44.0.windows.1</code></p>
+
+<p>Now check that bash.exe exists where Claude Code expects it:</p>
+<pre><code>dir "C:\Program Files\Git\bin\bash.exe"</code></pre>
+<p>You should see the file listed. If you see "File Not Found," try:</p>
+<pre><code>dir "C:\Program Files (x86)\Git\bin\bash.exe"</code></pre>
+
+<div class="box box-orange">
+  <strong>Write down which path worked</strong>
+  Whether it's <code>C:\Program Files\Git\bin\bash.exe</code> or
+  <code>C:\Program Files (x86)\Git\bin\bash.exe</code> — you'll need this path in the next step.
+</div>
+
+<!-- WIN STEP 3 -->
+<div class="page-break"></div>
+<h3 id="win-step3"><span class="step">3</span> Fix the Git Bash PATH Error — The Actual Fix</h3>
+
+<p>This is the error you saw. Here's how to fix it permanently:</p>
+
+<h4>Method A: Set the Environment Variable (Recommended — Permanent Fix)</h4>
+
+<ol>
+  <li>Press <code>Win + R</code>, type <code>sysdm.cpl</code>, press Enter</li>
+  <li>Click the <strong>"Advanced"</strong> tab</li>
+  <li>Click <strong>"Environment Variables..."</strong> button at the bottom</li>
+  <li>Under <strong>"User variables"</strong> (top section), click <strong>"New..."</strong></li>
+  <li>Fill in:
+    <ul>
+      <li><strong>Variable name:</strong> <code>CLAUDE_CODE_GIT_BASH_PATH</code></li>
+      <li><strong>Variable value:</strong> <code>C:\Program Files\Git\bin\bash.exe</code></li>
+    </ul>
+  </li>
+  <li>Click <strong>OK</strong> on all three windows to save</li>
+  <li><strong>RESTART VS Code completely</strong> (close it and reopen it)</li>
+</ol>
+
+<div class="box box-purple" style="margin: 16px 0;">
+  <strong>Visual Step-by-Step:</strong><br>
+  <code style="display: block; background: #1a1a2e; color: #a29bfe; padding: 16px; border-radius: 8px; margin: 8px 0; line-height: 2;">
+  Win + R → type "sysdm.cpl" → Enter<br>
+  → "Advanced" tab<br>
+  → "Environment Variables..." button<br>
+  → Under "User variables" → click "New..."<br>
+  → Variable name:  CLAUDE_CODE_GIT_BASH_PATH<br>
+  → Variable value: C:\Program Files\Git\bin\bash.exe<br>
+  → OK → OK → OK<br>
+  → RESTART VS CODE
+  </code>
+</div>
+
+<h4>Method B: Quick Terminal Fix (Temporary — For Testing)</h4>
+<p>If you just want to test quickly before doing Method A, open Command Prompt and run:</p>
+<pre><code>set CLAUDE_CODE_GIT_BASH_PATH=C:\Program Files\Git\bin\bash.exe</code></pre>
+<p>Then launch VS Code from THAT SAME terminal:</p>
+<pre><code>code .</code></pre>
+
+<div class="box box-orange">
+  <strong>Method B only lasts until you close the terminal.</strong>
+  Always do Method A for a permanent fix. Method B is just for quick testing.
+</div>
+
+<h4>Method C: PowerShell Alternative (Also Permanent)</h4>
+<p>Open PowerShell as Administrator and run:</p>
+<pre><code>[System.Environment]::SetEnvironmentVariable(
+  "CLAUDE_CODE_GIT_BASH_PATH",
+  "C:\Program Files\Git\bin\bash.exe",
+  "User"
+)</code></pre>
+<p>Then restart VS Code.</p>
+
+<h4>Verify the fix worked:</h4>
+<p>Open a NEW Command Prompt and type:</p>
+<pre><code>echo %CLAUDE_CODE_GIT_BASH_PATH%</code></pre>
+<p>Should print: <code>C:\Program Files\Git\bin\bash.exe</code></p>
+<p>If it prints <code>%CLAUDE_CODE_GIT_BASH_PATH%</code> (the variable name itself), the variable wasn't saved. Redo Method A.</p>
+
+<!-- WIN STEP 4 -->
+<hr class="divider">
+<h3 id="win-step4"><span class="step">4</span> Install Python</h3>
+
+<ol>
+  <li>Go to <code>python.org</code></li>
+  <li>Click <strong>"Download Python 3.12"</strong> (or latest 3.x version)</li>
+  <li>Run the installer</li>
+  <li><strong>CRITICAL:</strong> On the FIRST screen, check the box at the bottom that says:<br>
+    <code style="background: #55efc4; color: #2d3436; padding: 4px 8px; border-radius: 4px; font-weight: bold;">
+    ☑ Add python.exe to PATH
+    </code><br>
+    If you miss this, Python won't work from the terminal.
+  </li>
+  <li>Click <strong>"Install Now"</strong></li>
+</ol>
+
+<h4>Verify:</h4>
+<pre><code>python --version</code></pre>
+<p>Should show <code>Python 3.12.x</code> or similar.</p>
+
+<p>Also install the Python packages the tools need:</p>
+<pre><code>pip install python-pptx Pillow requests python-dotenv</code></pre>
+
+<!-- WIN STEP 5 -->
+<hr class="divider">
+<h3 id="win-step5"><span class="step">5</span> Install VS Code + Claude Code Extension</h3>
+
+<ol>
+  <li>Go to <code>code.visualstudio.com</code></li>
+  <li>Download the <strong>Windows</strong> installer</li>
+  <li>Run the installer. During installation:
+    <ul>
+      <li>Check <strong>"Add to PATH"</strong></li>
+      <li>Check <strong>"Register Code as an editor for supported file types"</strong></li>
+      <li>Check <strong>"Add 'Open with Code' action to Windows Explorer"</strong> (very useful)</li>
+    </ul>
+  </li>
+  <li>Open VS Code</li>
+  <li>Click the <strong>Extensions</strong> icon in the left sidebar (or press <code>Ctrl+Shift+X</code>)</li>
+  <li>Search for <strong>"Claude Code"</strong> by Anthropic</li>
+  <li>Click <strong>Install</strong></li>
+  <li>After installation, you should see a Claude icon in the sidebar</li>
+</ol>
+
+<div class="box box-green">
+  <strong>Alternative: Install Claude Code via Terminal</strong>
+  If you prefer the CLI version, open Command Prompt and run:
+  <pre style="margin: 8px 0 0;"><code>npm install -g @anthropic-ai/claude-code</code></pre>
+  Then run <code>claude</code> in any project folder to start.
+</div>
+
+<!-- WIN STEP 6 -->
+<hr class="divider">
+<h3 id="win-step6"><span class="step">6</span> Verify EVERYTHING Works Together</h3>
+
+<p>Open a <strong>NEW</strong> Command Prompt (important — must be new to pick up PATH changes) and run ALL of these:</p>
+
+<pre><code>REM Check Node.js
+node --version
+
+REM Check npm
+npm --version
+
+REM Check Git
+git --version
+
+REM Check Python
+python --version
+
+REM Check pip
+pip --version
+
+REM Check Git Bash path variable
+echo %CLAUDE_CODE_GIT_BASH_PATH%
+
+REM Check that bash.exe actually exists at that path
+dir "%CLAUDE_CODE_GIT_BASH_PATH%"
+
+REM Check VS Code
+code --version</code></pre>
+
+<h4>Expected output (all should show version numbers, no errors):</h4>
+<pre><code>v20.11.0                              &lt;-- Node.js
+10.2.0                                &lt;-- npm
+git version 2.44.0.windows.1         &lt;-- Git
+Python 3.12.2                         &lt;-- Python
+pip 24.0 from ...                     &lt;-- pip
+C:\Program Files\Git\bin\bash.exe     &lt;-- Git Bash path
+ bash.exe listed                      &lt;-- File exists
+1.87.0                                &lt;-- VS Code</code></pre>
+
+<div class="box box-green">
+  <strong>All checks pass?</strong>
+  Open VS Code, open the Claude Code panel, and start a conversation.
+  The Git Bash error should be gone. You're ready to proceed to Section 1.
+</div>
+
+<div class="box box-red">
+  <strong>Still seeing the error?</strong>
+  Try these in order:
+  <ol>
+    <li><strong>Restart your computer</strong> (not just VS Code — full restart)</li>
+    <li>Verify the path is correct: open File Explorer, navigate to <code>C:\Program Files\Git\bin\</code> and confirm <code>bash.exe</code> is there</li>
+    <li>If Git installed to a different location, find bash.exe: open Command Prompt and run<br>
+      <code>where bash</code><br>
+      Use whatever path it shows in the environment variable</li>
+    <li>If <code>where bash</code> shows nothing, Git Bash didn't install properly — uninstall Git, redownload, and install again (make sure to select the SECOND PATH option in Step 2)</li>
+  </ol>
+</div>
+
+<hr class="divider">
+
+<h3>Windows vs Mac — Key Differences Cheat Sheet</h3>
+
+<table>
+  <tr><th>Action</th><th>Mac (Terminal)</th><th>Windows (Command Prompt)</th></tr>
+  <tr>
+    <td>Open terminal</td>
+    <td><code>Terminal</code> app</td>
+    <td><code>Win + R</code> → <code>cmd</code> → Enter</td>
+  </tr>
+  <tr>
+    <td>Create folders</td>
+    <td><code>mkdir -p folder/subfolder</code></td>
+    <td><code>mkdir folder\subfolder</code></td>
+  </tr>
+  <tr>
+    <td>Path separator</td>
+    <td>Forward slash: <code>/</code></td>
+    <td>Backslash: <code>\</code></td>
+  </tr>
+  <tr>
+    <td>Home directory</td>
+    <td><code>~/Documents/</code></td>
+    <td><code>%USERPROFILE%\Documents\</code></td>
+  </tr>
+  <tr>
+    <td>List files</td>
+    <td><code>ls</code></td>
+    <td><code>dir</code></td>
+  </tr>
+  <tr>
+    <td>Environment variables</td>
+    <td><code>export VAR=value</code></td>
+    <td><code>set VAR=value</code> (temporary)<br><code>sysdm.cpl</code> (permanent)</td>
+  </tr>
+  <tr>
+    <td>Install Python packages</td>
+    <td><code>pip3 install package</code></td>
+    <td><code>pip install package</code></td>
+  </tr>
+  <tr>
+    <td>Hidden folders (.claude)</td>
+    <td>Visible with <code>ls -a</code></td>
+    <td>Show in Explorer: View → Show → Hidden items</td>
+  </tr>
+</table>
+
+<div class="box box-blue">
+  <strong>Windows Folder Structure Command</strong>
+  The <code>mkdir -p</code> command in Step 2 of Section 3 is a Mac/Linux command.
+  On Windows, use this instead (run in Command Prompt from your project folder):
+  <pre style="margin: 8px 0 0; font-size: 8.5pt;"><code>mkdir .claude\skills\webinar
+mkdir .claude\skills\ads
+mkdir .claude\skills\avatar
+mkdir .claude\skills\copy-master
+mkdir .claude\skills\email-copy
+mkdir .claude\skills\excalidraw-diagram
+mkdir .claude\skills\frontend-landings\references
+mkdir .claude\skills\landing-page
+mkdir .claude\skills\nano-banana-images
+mkdir .claude\skills\sales-page
+mkdir .claude\skills\skill-builder
+mkdir .claude\skills\trigger-automation
+mkdir .claude\skills\ux-ui-premium-direction-style-selector
+mkdir .claude\skills\video-script
+mkdir .claude\skills\visualizations
+mkdir .claude\skills\website-copy-extraction
+mkdir .claude\settings-reference
+mkdir tools
+mkdir workflows\webinar-copy
+mkdir 01-KNOWLEDGE\copywriting-arsenal\book-extractions
+mkdir 01-KNOWLEDGE\copywriting-arsenal\swipe-analyses
+mkdir 01-KNOWLEDGE\copywriting-arsenal\templates
+mkdir 01-KNOWLEDGE\copywriting-arsenal\checklists
+mkdir 01-KNOWLEDGE\copywriting-arsenal\anatomy-log\offer-section
+mkdir 01-KNOWLEDGE\copywriting-arsenal\anatomy-log\bonus
+mkdir 01-KNOWLEDGE\copywriting-arsenal\anatomy-log\ads
+mkdir 01-KNOWLEDGE\copywriting-arsenal\anatomy-log\landing-pages
+mkdir 01-KNOWLEDGE\copywriting-arsenal\anatomy-log\video-script
+mkdir 01-KNOWLEDGE\copywriting-arsenal\anatomy-log\email-copy
+mkdir 01-KNOWLEDGE\copywriting-arsenal\anatomy-log\sales-page
+mkdir 01-KNOWLEDGE\copywriting-arsenal\word-craft-training
+mkdir 01-KNOWLEDGE\sales-page-analyses
+mkdir 03-TOOLS\master-prompts
+mkdir 03-TOOLS\website-copy-extraction\extractions
+mkdir 03-TOOLS\website-clone-blueprints
+mkdir 03-TOOLS\file-compression
+mkdir webinar-library\voice
+mkdir webinar-library\intro-section\proof-assets
+mkdir webinar-library\content-section
+mkdir webinar-library\transition-section
+mkdir webinar-library\offer-section
+mkdir webinar-library\objection-handling
+mkdir webinar-library\avatars
+mkdir webinar-library\bonuses\jay-bonus-systems\tools
+mkdir brand-assets
+mkdir swipe-library
+mkdir images
+mkdir prompts</code></pre>
+</div>
+
+<!-- ============ SECTION 1: PREREQUISITES ============ -->
+<div class="page-break"></div>
+<h2 id="section1">Section 1: What You Need Before Starting</h2>
+
+<p>Before anything else, make sure you have these installed on your computer:</p>
+
+<h3>Required Software</h3>
+<table>
+  <tr><th>Software</th><th>What It Does</th><th>How to Get It</th></tr>
+  <tr>
+    <td><strong>VS Code</strong></td>
+    <td>Your code editor — where everything happens</td>
+    <td><code>code.visualstudio.com</code></td>
+  </tr>
+  <tr>
+    <td><strong>Claude Code Extension</strong></td>
+    <td>The AI brain inside VS Code</td>
+    <td>VS Code Extensions → search "Claude Code" by Anthropic</td>
+  </tr>
+  <tr>
+    <td><strong>Node.js (v18+)</strong></td>
+    <td>Runs JavaScript tools and MCP servers</td>
+    <td><code>nodejs.org</code> (LTS version)</td>
+  </tr>
+  <tr>
+    <td><strong>Python (3.10+)</strong></td>
+    <td>Runs automation scripts (PowerPoint, images, etc.)</td>
+    <td><code>python.org</code> or via Homebrew: <code>brew install python</code></td>
+  </tr>
+  <tr>
+    <td><strong>Git</strong></td>
+    <td>Version control (usually pre-installed on Mac)</td>
+    <td><code>git-scm.com</code></td>
+  </tr>
+</table>
+
+<div class="box box-orange">
+  <strong>IMPORTANT: You Need an Anthropic Account</strong>
+  Claude Code requires an Anthropic API key OR a Claude Pro/Team subscription.
+  Without this, none of the skills will work. Get it at <code>console.anthropic.com</code>.
+</div>
+
+<h3>Required API Keys</h3>
+<p>These are the "fuel" for different features. Not all are required — it depends on what you're building:</p>
+
+<table>
+  <tr><th>API Key</th><th>What It Powers</th><th>Required?</th></tr>
+  <tr>
+    <td><code>ANTHROPIC_API_KEY</code></td>
+    <td>Claude AI itself (if using API directly)</td>
+    <td>Only if building Claude API apps</td>
+  </tr>
+  <tr>
+    <td><code>GEMINI_API_KEY</code></td>
+    <td>Google Gemini — AI image generation</td>
+    <td>For image generation features</td>
+  </tr>
+  <tr>
+    <td><code>KIE_API_KEY</code></td>
+    <td>Kie.ai — Nano Banana 2 hyper-realistic images</td>
+    <td>For premium image generation</td>
+  </tr>
+  <tr>
+    <td><code>IMGBB_API_KEY</code></td>
+    <td>Image hosting (for reference images in AI generation)</td>
+    <td>For image workflows</td>
+  </tr>
+  <tr>
+    <td><code>PERPLEXITY_API_KEY</code></td>
+    <td>Perplexity AI — deep web research</td>
+    <td>For avatar research (Phase A)</td>
+  </tr>
+  <tr>
+    <td><code>GMAIL_CLIENT_ID</code> / <code>SECRET</code></td>
+    <td>Gmail API — email automation</td>
+    <td>For email features</td>
+  </tr>
+</table>
+
+<div class="box box-green">
+  <strong>Start Simple</strong>
+  You don't need ALL API keys to start. Claude Code itself works with just the Anthropic subscription.
+  Add API keys as you need specific features.
+</div>
+
+
+<!-- ============ SECTION 2: BIG PICTURE ============ -->
+<div class="page-break"></div>
+<h2 id="section2">Section 2: The Big Picture — What You're Building</h2>
+
+<p>This setup transforms Claude Code from a basic AI chat assistant into a <strong>full production system</strong>. Here's what you get:</p>
+
+<h3>The WAT Framework</h3>
+<p>Everything runs on three layers:</p>
+
+<table>
+  <tr><th>Layer</th><th>What It Is</th><th>Where It Lives</th></tr>
+  <tr>
+    <td><strong>W</strong>orkflows</td>
+    <td>Step-by-step SOPs (Standard Operating Procedures) — tells Claude WHAT to do and in what order</td>
+    <td><code>workflows/</code></td>
+  </tr>
+  <tr>
+    <td><strong>A</strong>gent (Claude)</td>
+    <td>Claude reads workflows, runs tools, handles failures, asks when unclear</td>
+    <td><code>.claude/skills/</code></td>
+  </tr>
+  <tr>
+    <td><strong>T</strong>ools</td>
+    <td>Python/JS scripts that do the actual work — API calls, file operations, data transforms</td>
+    <td><code>tools/</code></td>
+  </tr>
+</table>
+
+<div class="box box-purple">
+  <strong>Why This Matters</strong>
+  When AI handles every step directly, accuracy drops fast. 90% accuracy per step = only 59% success after 5 steps.
+  By offloading execution to deterministic scripts, Claude focuses on ORCHESTRATION while tools handle the precision work.
+</div>
+
+<h3>What You Get — The Full Arsenal</h3>
+<ul>
+  <li><strong>22+ Specialized Skills</strong> — copywriting, design, landing pages, video scripts, slide decks, image generation, email sequences, and more</li>
+  <li><strong>70+ Knowledge Files</strong> — copywriting frameworks, book extractions, swipe file analyses, voice profiles</li>
+  <li><strong>Python Automation Tools</strong> — PowerPoint animation scripts, image generation, screenshot tools</li>
+  <li><strong>MCP Server Integration</strong> — Trigger.dev for workflow automation and scheduled tasks</li>
+  <li><strong>Workflows</strong> — Battle-tested SOPs for webinar copy, landing pages, slide decks, ad copy, and visual assets</li>
+</ul>
+
+
+<!-- ============ SECTION 3: STEP BY STEP ============ -->
+<div class="page-break"></div>
+<h2 id="section3">Section 3: Step-by-Step Setup</h2>
+
+<div class="box box-blue">
+  <strong>How to Use This Section</strong>
+  Follow each step in order. Don't skip ahead. Each step builds on the previous one.
+  Check off each item as you complete it. By the end, your Claude Code will be fully loaded.
+</div>
+
+<!-- STEP 1 -->
+<h3 id="step1"><span class="step">1</span> Create Your Project Folder</h3>
+
+<p>Open Terminal and run:</p>
+<pre><code>mkdir -p ~/Documents/YOUR-PROJECT-NAME
+cd ~/Documents/YOUR-PROJECT-NAME</code></pre>
+
+<p>Then open it in VS Code:</p>
+<pre><code>code .</code></pre>
+
+<div class="box box-green">
+  <strong>Naming Tip</strong>
+  Name the folder something meaningful to your project.
+  Example: <code>MY-AI-BUSINESS</code> or <code>WEBINAR-PROJECT</code> or <code>CHIDU-WORKSPACE</code>
+</div>
+
+<!-- STEP 2 -->
+<hr class="divider">
+<h3 id="step2"><span class="step">2</span> Build the Folder Structure</h3>
+
+<p>Run this command in your Terminal to create the entire folder structure at once:</p>
+
+<pre><code># Create ALL directories in one command
+mkdir -p .claude/skills/webinar \
+  .claude/skills/ads \
+  .claude/skills/avatar \
+  .claude/skills/copy-master \
+  .claude/skills/email-copy \
+  .claude/skills/excalidraw-diagram \
+  .claude/skills/frontend-landings/references \
+  .claude/skills/landing-page \
+  .claude/skills/nano-banana-images \
+  .claude/skills/sales-page \
+  .claude/skills/skill-builder \
+  .claude/skills/trigger-automation \
+  .claude/skills/ux-ui-premium-direction-style-selector \
+  .claude/skills/video-script \
+  .claude/skills/visualizations \
+  .claude/skills/website-copy-extraction \
+  .claude/settings-reference \
+  tools \
+  workflows/webinar-copy \
+  01-KNOWLEDGE/copywriting-arsenal/book-extractions \
+  01-KNOWLEDGE/copywriting-arsenal/swipe-analyses \
+  01-KNOWLEDGE/copywriting-arsenal/templates \
+  01-KNOWLEDGE/copywriting-arsenal/checklists \
+  01-KNOWLEDGE/copywriting-arsenal/anatomy-log/offer-section \
+  01-KNOWLEDGE/copywriting-arsenal/anatomy-log/bonus \
+  01-KNOWLEDGE/copywriting-arsenal/anatomy-log/ads \
+  01-KNOWLEDGE/copywriting-arsenal/anatomy-log/landing-pages \
+  01-KNOWLEDGE/copywriting-arsenal/anatomy-log/video-script \
+  01-KNOWLEDGE/copywriting-arsenal/anatomy-log/email-copy \
+  01-KNOWLEDGE/copywriting-arsenal/anatomy-log/sales-page \
+  01-KNOWLEDGE/copywriting-arsenal/word-craft-training \
+  01-KNOWLEDGE/sales-page-analyses \
+  03-TOOLS/master-prompts \
+  03-TOOLS/website-copy-extraction/extractions \
+  03-TOOLS/website-clone-blueprints \
+  03-TOOLS/file-compression \
+  webinar-library/voice \
+  webinar-library/intro-section/proof-assets \
+  webinar-library/content-section \
+  webinar-library/transition-section \
+  webinar-library/offer-section \
+  webinar-library/objection-handling \
+  webinar-library/avatars \
+  webinar-library/bonuses/jay-bonus-systems/tools \
+  brand-assets \
+  swipe-library \
+  images \
+  prompts</code></pre>
+
+<div class="box box-orange">
+  <strong>Why So Many Folders?</strong>
+  Each folder has a specific purpose. The skills expect files in exact locations.
+  Think of it like game save slots — if the folder doesn't exist, the skill can't save/load from it.
+</div>
+
+<!-- STEP 3 -->
+<div class="page-break"></div>
+<h3 id="step3"><span class="step">3</span> Set Up the .claude/ Configuration</h3>
+
+<p>The <code>.claude/</code> folder is Claude Code's brain. Three files control everything:</p>
+
+<h4>File 1: <code>.claude/settings.json</code></h4>
+<p>This controls what Claude Code is allowed to do:</p>
+<pre><code>{
+  "permissions": {
+    "allow": [
+      "Read(~/**)"
+    ]
+  }
+}</code></pre>
+
+<div class="box box-purple">
+  <strong>What This Does</strong>
+  Gives Claude read access to your files. Claude Code will ask permission for other operations
+  (writing files, running scripts, etc.) the first time — you can approve them as they come up,
+  or add more permissions here later.
+</div>
+
+<h4>File 2: <code>.claude/settings.local.json</code></h4>
+<p>This controls which websites Claude can fetch from (for research, extraction, etc.):</p>
+<pre><code>{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:YOUR-ALLOWED-DOMAIN-1.com)",
+      "WebFetch(domain:YOUR-ALLOWED-DOMAIN-2.com)"
+    ]
+  }
+}</code></pre>
+<p>Replace with actual domains you want Claude to access. Or leave empty and approve domains as they come up.</p>
+
+<h4>File 3: <code>.claude/mcp.json</code> (MCP Server Config)</h4>
+<p>This connects Claude Code to external automation platforms:</p>
+<pre><code>{
+  "mcpServers": {
+    "trigger.dev": {
+      "command": "npx",
+      "args": ["trigger.dev@4.4.0", "mcp"]
+    }
+  }
+}</code></pre>
+
+<div class="box box-green">
+  <strong>What's MCP?</strong>
+  Model Context Protocol — it lets Claude Code talk to external services.
+  Trigger.dev is a workflow automation platform (like Zapier, but you write code).
+  If you don't need automation, you can skip this file for now.
+</div>
+
+<!-- STEP 4 -->
+<div class="page-break"></div>
+<h3 id="step4"><span class="step">4</span> Install All Skills</h3>
+
+<p>Skills are <code>.md</code> files that teach Claude Code how to do specific things. Think of them as "game cartridges" — each one unlocks a new ability.</p>
+
+<div class="box box-red">
+  <strong>CRITICAL: You Need the Actual Skill Files</strong>
+  Skills are custom-built markdown files. They are NOT available from a public repository.
+  You need to get them from the workspace owner (Jay/Jebril) who will share the files with you.
+  <br><br>
+  <strong>Ask for:</strong> A ZIP or shared folder of the entire <code>.claude/skills/</code> directory.
+  Copy the contents directly into your <code>.claude/skills/</code> folder.
+</div>
+
+<h4>Skills Map — What Goes Where</h4>
+
+<p><strong>Flat File Skills</strong> (single .md files → drop directly into <code>.claude/skills/</code>):</p>
+<table>
+  <tr><th>File Name</th><th>What It Does</th></tr>
+  <tr><td><code>algorithmic-art.md</code></td><td>Creates animated/generative art using p5.js</td></tr>
+  <tr><td><code>book-extraction.md</code></td><td>Extracts intelligence from any book into layered reference files</td></tr>
+  <tr><td><code>canvas-design.md</code></td><td>Creates infographics, thumbnails, flyers, mockups (PNG/PDF)</td></tr>
+  <tr><td><code>docx.md</code></td><td>Creates and edits Word documents</td></tr>
+  <tr><td><code>editing.md</code></td><td>Content editing with template workflows</td></tr>
+  <tr><td><code>frontend-design.md</code></td><td>High-quality web interface design (avoids "AI look")</td></tr>
+  <tr><td><code>pdf.md</code></td><td>PDF creation, reading, merging, splitting, OCR</td></tr>
+  <tr><td><code>pptx.md</code></td><td>PowerPoint creation with speaker notes</td></tr>
+  <tr><td><code>pptxgenjs.md</code></td><td>JavaScript-based PowerPoint generation</td></tr>
+  <tr><td><code>theme-factory.md</code></td><td>10 professional design themes for slides/docs</td></tr>
+  <tr><td><code>web-artifacts-builder.md</code></td><td>Landing pages using React/Tailwind/shadcn</td></tr>
+  <tr><td><code>webinar-slides.md</code></td><td>Cinematic webinar slide decks with animations</td></tr>
+</table>
+
+<p><strong>Folder-Based Skills</strong> (each has a <code>SKILL.md</code> inside a subfolder):</p>
+<table>
+  <tr><th>Folder</th><th>Key Files Inside</th><th>What It Does</th></tr>
+  <tr><td><code>ads/</code></td><td>SKILL.md</td><td>Facebook, Instagram, YouTube, WhatsApp ad copy</td></tr>
+  <tr><td><code>avatar/</code></td><td>SKILL.md</td><td>Creates Phase B + Phase C audience research documents</td></tr>
+  <tr><td><code>copy-master/</code></td><td>SKILL.md, copy-formula-router.md</td><td>Universal copy intelligence — runs FIRST before any copy task</td></tr>
+  <tr><td><code>email-copy/</code></td><td>SKILL.md</td><td>Email & WhatsApp broadcasts and sequences</td></tr>
+  <tr><td><code>excalidraw-diagram/</code></td><td>SKILL.md</td><td>Editable Excalidraw diagram files</td></tr>
+  <tr><td><code>frontend-landings/</code></td><td>SKILL.md, references/STYLE_PRESETS.md</td><td>Premium HTML landing pages with 10 style presets</td></tr>
+  <tr><td><code>landing-page/</code></td><td>SKILL.md</td><td>Registration pages, sales pages, thank-you pages</td></tr>
+  <tr><td><code>nano-banana-images/</code></td><td>SKILL.md, gemini.md, master_prompt_reference.md</td><td>Hyper-realistic AI images via Kie.ai API</td></tr>
+  <tr><td><code>sales-page/</code></td><td>SKILL.md</td><td>Long-form sales pages and sales letters</td></tr>
+  <tr><td><code>skill-builder/</code></td><td>SKILL.md, reference.md</td><td>Creates and audits new skills</td></tr>
+  <tr><td><code>trigger-automation/</code></td><td>SKILL.md</td><td>Trigger.dev workflow automation builder</td></tr>
+  <tr><td><code>ux-ui-premium-direction-style-selector/</code></td><td>SKILL.md</td><td>8 different visual direction demos for web projects</td></tr>
+  <tr><td><code>video-script/</code></td><td>SKILL.md</td><td>Short ads (15-90s), VSL (5-20min), thank-you page videos</td></tr>
+  <tr><td><code>visualizations/</code></td><td>SKILL.md</td><td>Hand-drawn style PNG visuals</td></tr>
+  <tr><td><code>website-copy-extraction/</code></td><td>SKILL.md</td><td>Extract and analyze sales copy from any website</td></tr>
+</table>
+
+<p><strong>Webinar-Specific Skills</strong> (inside <code>.claude/skills/webinar/</code>):</p>
+<table>
+  <tr><th>File</th><th>What It Does</th></tr>
+  <tr><td><code>orchestrator.md</code></td><td>Routes ANY webinar task to the right sub-skill</td></tr>
+  <tr><td><code>intro-skill.md</code></td><td>Writes intro section (Hook → Position → Pain → Gains)</td></tr>
+  <tr><td><code>content-skill.md</code></td><td>Writes content section (Paradigm → Mechanism)</td></tr>
+  <tr><td><code>offer-skill.md</code></td><td>Writes offer section (Core Offer → Price → Scarcity → Bonuses → Guarantee)</td></tr>
+  <tr><td><code>overlay-upgrader.md</code></td><td>Upgrades any section to gold-standard quality</td></tr>
+</table>
+
+<!-- STEP 5 -->
+<div class="page-break"></div>
+<h3 id="step5"><span class="step">5</span> Set Up API Keys</h3>
+
+<p>Create a file called <code>.env</code> in your project root:</p>
+
+<pre><code># ========================================
+# API KEYS — Add your keys below
+# ========================================
+
+# Anthropic (Claude API — only if building API apps)
+ANTHROPIC_API_KEY=your-key-here
+
+# Google Gemini (AI image generation)
+GEMINI_API_KEY=your-key-here
+
+# Kie.ai (Nano Banana 2 — hyper-realistic images)
+KIE_API_KEY=your-key-here
+KIE_AI_API_KEY=your-key-here
+
+# imgbb (Image hosting for AI generation references)
+IMGBB_API_KEY=your-key-here
+
+# Perplexity (Deep web research for avatar Phase A)
+PERPLEXITY_API_KEY=your-key-here
+
+# Gmail API (Email automation)
+GMAIL_CLIENT_ID=your-id-here
+GMAIL_CLIENT_SECRET=your-secret-here
+
+# n8n/Zapier (Self-hosted automation webhooks)
+N8N_WEBHOOK_URL=your-webhook-url-here</code></pre>
+
+<div class="box box-red">
+  <strong>NEVER Commit .env to Git</strong>
+  Add <code>.env</code> to your <code>.gitignore</code> file. API keys are secret — if someone gets them,
+  they can use your accounts and rack up charges.
+</div>
+
+<p>Also create a <code>.env.example</code> file (same content but with placeholder values) so others know what keys are needed.</p>
+
+<!-- STEP 6 -->
+<hr class="divider">
+<h3 id="step6"><span class="step">6</span> Install Python Tools</h3>
+
+<p>The <code>tools/</code> folder contains Python scripts. Install the dependencies:</p>
+
+<pre><code># Install Python packages used by the tools
+pip install python-pptx Pillow requests python-dotenv</code></pre>
+
+<p>Then copy these tool scripts from the source workspace into your <code>tools/</code> folder:</p>
+
+<table>
+  <tr><th>Script</th><th>What It Does</th></tr>
+  <tr><td><code>pptx_animations.py</code></td><td>Adds click-to-reveal animations to PowerPoint slides</td></tr>
+  <tr><td><code>pptx_progressive.py</code></td><td>Creates progressive reveal decks (text appears step by step)</td></tr>
+  <tr><td><code>screenshot_proof.py</code></td><td>Captures and processes screenshot proof assets</td></tr>
+  <tr><td><code>README.md</code></td><td>Documentation for all tools</td></tr>
+</table>
+
+<div class="box box-green">
+  <strong>Ask for the tools/ folder</strong>
+  Get the complete <code>tools/</code> directory from the workspace owner.
+  These are custom Python scripts — not available via pip.
+</div>
+
+<!-- STEP 7 -->
+<div class="page-break"></div>
+<h3 id="step7"><span class="step">7</span> Create Your CLAUDE.md (The Brain File)</h3>
+
+<p>The <code>CLAUDE.md</code> file is the MOST IMPORTANT file in the entire setup. It lives in your project root and tells Claude Code:</p>
+<ul>
+  <li>What framework to use (WAT)</li>
+  <li>Where everything is located</li>
+  <li>What skills are available</li>
+  <li>Rules and behaviors to follow</li>
+  <li>Current project status</li>
+</ul>
+
+<div class="box box-purple">
+  <strong>Think of CLAUDE.md as the Instruction Manual</strong>
+  Without it, Claude Code has skills but doesn't know when or how to use them.
+  With it, Claude Code knows EXACTLY what to do for any request.
+</div>
+
+<p><strong>Structure of CLAUDE.md:</strong></p>
+<pre><code># YOUR PROJECT NAME — Master Navigator
+
+## WAT Framework — How to Operate
+[Explains the Workflows → Agent → Tools system]
+
+## Operating Rules
+[Rules like: look for existing tools first, learn from failures,
+keep workflows current, API keys in .env only]
+
+## Skills Inventory
+[Table of ALL skills with invoke triggers]
+
+## Folder Map
+[Where every file and folder lives]
+
+## Current Project
+[What you're currently working on]
+
+## API Keys
+[Reference to .env]</code></pre>
+
+<div class="box box-red">
+  <strong>CRITICAL: Get the Actual CLAUDE.md</strong>
+  Ask the workspace owner for their CLAUDE.md as a starting template.
+  Then customize it for YOUR project — update the skills inventory,
+  folder map, current project, and any project-specific rules.
+</div>
+
+<!-- STEP 8 -->
+<hr class="divider">
+<h3 id="step8"><span class="step">8</span> Set Up Knowledge Base (If Doing Copywriting)</h3>
+
+<p>The <code>01-KNOWLEDGE/</code> folder is a massive reference library. If you're doing copywriting work, this is essential:</p>
+
+<h4>Core Arsenal Files (16 numbered files)</h4>
+<table>
+  <tr><th>#</th><th>File</th><th>Contains</th></tr>
+  <tr><td>00</td><td>MASTER-SYSTEM-PROMPT.md</td><td>Arsenal system prompt</td></tr>
+  <tr><td>01</td><td>core-frameworks.md</td><td>25 copywriting frameworks (AIDA, PAS, PASTOR, etc.)</td></tr>
+  <tr><td>02</td><td>awareness-and-sophistication.md</td><td>Schwartz 5 levels, sophistication stages</td></tr>
+  <tr><td>03</td><td>psychological-triggers.md</td><td>Cialdini's triggers, tribal identity, arousal science</td></tr>
+  <tr><td>04</td><td>pre-suasion-and-priming.md</td><td>Mystery hooks, open loops, Zeigarnik effect</td></tr>
+  <tr><td>05</td><td>master-swipe-patterns.md</td><td>Classic ad breakdowns (Halbert, Hopkins, Ogilvy)</td></tr>
+  <tr><td>06</td><td>positioning-strategy.md</td><td>Ries/Trout positioning, Onliness Statement</td></tr>
+  <tr><td>07</td><td>story-frameworks.md</td><td>12+ story frameworks for copy</td></tr>
+  <tr><td>08</td><td>voice-profiles.md</td><td>13 legendary copywriter voice profiles</td></tr>
+  <tr><td>09</td><td>adaptation-protocol.md</td><td>Media-specific adaptation rules</td></tr>
+  <tr><td>10</td><td>neuromarketing-and-buying-psychology.md</td><td>VAKOG, somatic markers, mirror neurons</td></tr>
+  <tr><td>11</td><td>market-specific-guides.md</td><td>Nigerian market, WhatsApp dynamics</td></tr>
+  <tr><td>12</td><td>differentiation-and-category-design.md</td><td>USP, ZAG, Purple Cow, category creation</td></tr>
+  <tr><td>13</td><td>virality-and-social-transmission.md</td><td>SUCCESs stickiness + STEPPS virality</td></tr>
+  <tr><td>14</td><td>creative-ideation-and-big-ideas.md</td><td>Finding the Big Idea</td></tr>
+  <tr><td>15</td><td>slippery-slide-and-readership.md</td><td>Sugarman's 31 triggers, engagement mechanics</td></tr>
+</table>
+
+<h4>Book Extractions (22 files)</h4>
+<p>Full intelligence extractions from legendary copywriting and marketing books:</p>
+<ul>
+  <li>Breakthrough Advertising (Schwartz)</li>
+  <li>Influence Parts 1 & 2 (Cialdini)</li>
+  <li>Pre-Suasion (Cialdini)</li>
+  <li>Adweek Copywriting Handbook (Sugarman)</li>
+  <li>The Boron Letters (Halbert)</li>
+  <li>Ogilvy on Advertising</li>
+  <li>Scientific Advertising (Hopkins)</li>
+  <li>Positioning (Ries & Trout)</li>
+  <li>Made to Stick (Heath Brothers)</li>
+  <li>Contagious (Berger)</li>
+  <li>Purple Cow (Godin)</li>
+  <li>Cashvertising (Whitman)</li>
+  <li>Hey Whipple (Sullivan)</li>
+  <li>Great Leads (Masterson)</li>
+  <li>...and more</li>
+</ul>
+
+<h4>Swipe File Analyses (16 files)</h4>
+<p>Detailed breakdowns of legendary ads: Halbert's dollar letter, Hopkins' Schlitz beer, Ogilvy's Hathaway shirt, Schwartz's boardroom reports, Sugarman's BluBlocker, and more.</p>
+
+<h4>Word Craft Training (3 files)</h4>
+<ul>
+  <li><code>jason-word-craft-study-batch1.md</code> — 19 word craft techniques</li>
+  <li><code>jason-word-craft-study-batch2.md</code> — Advanced techniques</li>
+  <li><code>fang-yuan-compressed-wisdom-study.md</code> — Compression and precision</li>
+</ul>
+
+<div class="box box-blue">
+  <strong>Not Doing Copywriting?</strong>
+  If your project is purely web development, design, or automation — you can skip the
+  01-KNOWLEDGE folder entirely. The skills still work without it. The knowledge base
+  just makes the copy-related skills dramatically more powerful.
+</div>
+
+<!-- STEP 9 -->
+<div class="page-break"></div>
+<h3 id="step9"><span class="step">9</span> Verify Everything Works</h3>
+
+<p>Open Claude Code in VS Code and test each layer:</p>
+
+<h4>Test 1: Basic Communication</h4>
+<p>Type in Claude Code chat: <em>"What skills do you have available?"</em></p>
+<p>Claude should list all the skills from your CLAUDE.md file.</p>
+
+<h4>Test 2: Skill Invocation</h4>
+<p>Try invoking a simple skill: <em>"Create a simple PDF document with the title 'Test'"</em></p>
+<p>If the PDF skill is installed correctly, Claude will generate a PDF.</p>
+
+<h4>Test 3: Folder Awareness</h4>
+<p>Ask: <em>"Show me the folder structure of this project"</em></p>
+<p>Claude should navigate and describe your folder structure correctly.</p>
+
+<h4>Test 4: Tool Execution</h4>
+<p>If you have Python tools installed, ask Claude to run a test:</p>
+<pre><code>python tools/test_animation.py</code></pre>
+
+<h4>Test 5: API Keys</h4>
+<p>Ask Claude to check if API keys are configured: <em>"Check if my .env file has the required API keys"</em></p>
+
+<div class="box box-green">
+  <strong>All Tests Pass?</strong>
+  You're fully loaded. Start building.
+</div>
+
+
+<!-- ============ SECTION 4: SKILLS REFERENCE ============ -->
+<div class="page-break"></div>
+<h2 id="section4">Section 4: Complete Skills Reference</h2>
+
+<p>Here's every skill, what triggers it, and what it produces:</p>
+
+<h3>Design & Visual Skills</h3>
+<table>
+  <tr><th>Skill</th><th>Trigger Phrases</th><th>Output</th></tr>
+  <tr>
+    <td><strong>canvas-design</strong></td>
+    <td>"create an infographic," "make a thumbnail," "design a flyer"</td>
+    <td>PNG or PDF visual</td>
+  </tr>
+  <tr>
+    <td><strong>algorithmic-art</strong></td>
+    <td>"create generative art," "make animated visuals"</td>
+    <td>p5.js animation</td>
+  </tr>
+  <tr>
+    <td><strong>excalidraw-diagram</strong></td>
+    <td>"draw a diagram," "make a flowchart"</td>
+    <td>.excalidraw file</td>
+  </tr>
+  <tr>
+    <td><strong>visualizations</strong></td>
+    <td>"draw a visual," "make a hand-drawn visual"</td>
+    <td>PNG image</td>
+  </tr>
+  <tr>
+    <td><strong>nano-banana-images</strong></td>
+    <td>"generate a realistic image," "create a photo"</td>
+    <td>AI-generated image via Kie.ai</td>
+  </tr>
+  <tr>
+    <td><strong>theme-factory</strong></td>
+    <td>"create a theme," "design a color palette"</td>
+    <td>10 theme presets</td>
+  </tr>
+</table>
+
+<h3>Web & Frontend Skills</h3>
+<table>
+  <tr><th>Skill</th><th>Trigger Phrases</th><th>Output</th></tr>
+  <tr>
+    <td><strong>frontend-design</strong></td>
+    <td>"build a web component," "create a page"</td>
+    <td>Production-grade HTML/CSS/JS</td>
+  </tr>
+  <tr>
+    <td><strong>frontend-landings</strong></td>
+    <td>"create a landing page," "build a marketing page"</td>
+    <td>Single-file animated HTML</td>
+  </tr>
+  <tr>
+    <td><strong>landing-page</strong></td>
+    <td>"build a registration page," "create a thank-you page"</td>
+    <td>Full landing page</td>
+  </tr>
+  <tr>
+    <td><strong>web-artifacts-builder</strong></td>
+    <td>"build a React component"</td>
+    <td>React/Tailwind/shadcn artifacts</td>
+  </tr>
+  <tr>
+    <td><strong>ux-ui-premium-direction</strong></td>
+    <td>"show me design directions," "compare visual styles"</td>
+    <td>8 different design demos</td>
+  </tr>
+</table>
+
+<h3>Copywriting & Marketing Skills</h3>
+<table>
+  <tr><th>Skill</th><th>Trigger Phrases</th><th>Output</th></tr>
+  <tr>
+    <td><strong>copy-master</strong></td>
+    <td>"write copy for," "create an ad," (runs FIRST automatically)</td>
+    <td>Copy intelligence brief</td>
+  </tr>
+  <tr>
+    <td><strong>ads</strong></td>
+    <td>"write a Facebook ad," "create Instagram copy"</td>
+    <td>3 ad variations with hooks</td>
+  </tr>
+  <tr>
+    <td><strong>sales-page</strong></td>
+    <td>"write a sales page," "create a sales letter"</td>
+    <td>Long-form sales copy</td>
+  </tr>
+  <tr>
+    <td><strong>email-copy</strong></td>
+    <td>"write an email," "create a launch sequence"</td>
+    <td>Email/WhatsApp copy</td>
+  </tr>
+  <tr>
+    <td><strong>video-script</strong></td>
+    <td>"write a video ad," "write a VSL"</td>
+    <td>Video scripts (short/long)</td>
+  </tr>
+  <tr>
+    <td><strong>avatar</strong></td>
+    <td>"create avatar," "build Phase B," "research audience"</td>
+    <td>Phase B + C audience docs</td>
+  </tr>
+  <tr>
+    <td><strong>website-copy-extraction</strong></td>
+    <td>"analyze this sales page," "extract copy from"</td>
+    <td>Copy extraction analysis</td>
+  </tr>
+</table>
+
+<h3>Document & Presentation Skills</h3>
+<table>
+  <tr><th>Skill</th><th>Trigger Phrases</th><th>Output</th></tr>
+  <tr>
+    <td><strong>pdf</strong></td>
+    <td>"create a PDF," "merge PDFs," "extract from PDF"</td>
+    <td>PDF files</td>
+  </tr>
+  <tr>
+    <td><strong>pptx</strong></td>
+    <td>"create a presentation," "make slides"</td>
+    <td>PowerPoint files</td>
+  </tr>
+  <tr>
+    <td><strong>docx</strong></td>
+    <td>"create a Word document"</td>
+    <td>Word documents</td>
+  </tr>
+  <tr>
+    <td><strong>webinar-slides</strong></td>
+    <td>"create webinar slides," "build slide deck"</td>
+    <td>Cinematic webinar PPTX</td>
+  </tr>
+  <tr>
+    <td><strong>book-extraction</strong></td>
+    <td>"extract [book]," "add [book] to arsenal"</td>
+    <td>5-layer intelligence file</td>
+  </tr>
+</table>
+
+<h3>Automation & Utility Skills</h3>
+<table>
+  <tr><th>Skill</th><th>Trigger Phrases</th><th>Output</th></tr>
+  <tr>
+    <td><strong>trigger-automation</strong></td>
+    <td>"create an automation," "set up a webhook"</td>
+    <td>Trigger.dev TypeScript tasks</td>
+  </tr>
+  <tr>
+    <td><strong>skill-builder</strong></td>
+    <td>"create a new skill," "audit this skill"</td>
+    <td>New or optimized skill files</td>
+  </tr>
+</table>
+
+
+<!-- ============ SECTION 5: FOLDER MAP ============ -->
+<div class="page-break"></div>
+<h2 id="section5">Section 5: Complete Folder Structure Map</h2>
+
+<div class="tree"><span class="folder">YOUR-PROJECT/</span>
+├── <span class="file">CLAUDE.md</span>                         <span class="comment">← THE BRAIN FILE (most important)</span>
+├── <span class="file">.env</span>                              <span class="comment">← API keys (NEVER commit to git)</span>
+├── <span class="file">.env.example</span>                      <span class="comment">← Template showing which keys are needed</span>
+├── <span class="file">.gitignore</span>                        <span class="comment">← Must include .env</span>
+│
+├── <span class="folder">.claude/</span>                          <span class="comment">← Claude Code configuration</span>
+│   ├── <span class="file">mcp.json</span>                      <span class="comment">← MCP server connections</span>
+│   ├── <span class="file">settings.json</span>                 <span class="comment">← Global permissions</span>
+│   ├── <span class="file">settings.local.json</span>           <span class="comment">← Local overrides (web fetch domains)</span>
+│   ├── <span class="folder">settings-reference/</span>           <span class="comment">← Reference configs</span>
+│   │   └── <span class="file">frontend-rules.md</span>
+│   └── <span class="folder">skills/</span>                       <span class="comment">← ALL SKILLS LIVE HERE</span>
+│       ├── <span class="file">algorithmic-art.md</span>        <span class="comment">← Flat file skills</span>
+│       ├── <span class="file">book-extraction.md</span>
+│       ├── <span class="file">canvas-design.md</span>
+│       ├── <span class="file">docx.md</span>
+│       ├── <span class="file">editing.md</span>
+│       ├── <span class="file">frontend-design.md</span>
+│       ├── <span class="file">pdf.md</span>
+│       ├── <span class="file">pptx.md</span>
+│       ├── <span class="file">pptxgenjs.md</span>
+│       ├── <span class="file">theme-factory.md</span>
+│       ├── <span class="file">web-artifacts-builder.md</span>
+│       ├── <span class="file">webinar-slides.md</span>
+│       ├── <span class="folder">ads/</span>                     <span class="comment">← Folder-based skills</span>
+│       │   └── <span class="file">SKILL.md</span>
+│       ├── <span class="folder">avatar/</span>
+│       │   └── <span class="file">SKILL.md</span>
+│       ├── <span class="folder">copy-master/</span>
+│       │   ├── <span class="file">SKILL.md</span>
+│       │   └── <span class="file">copy-formula-router.md</span>
+│       ├── <span class="folder">email-copy/</span>
+│       │   └── <span class="file">SKILL.md</span>
+│       ├── <span class="folder">excalidraw-diagram/</span>
+│       │   └── <span class="file">SKILL.md</span>
+│       ├── <span class="folder">frontend-landings/</span>
+│       │   ├── <span class="file">SKILL.md</span>
+│       │   └── <span class="folder">references/</span>
+│       │       └── <span class="file">STYLE_PRESETS.md</span>
+│       ├── <span class="folder">landing-page/</span>
+│       │   └── <span class="file">SKILL.md</span>
+│       ├── <span class="folder">nano-banana-images/</span>
+│       │   ├── <span class="file">SKILL.md</span>
+│       │   ├── <span class="file">gemini.md</span>
+│       │   └── <span class="file">master_prompt_reference.md</span>
+│       ├── <span class="folder">sales-page/</span>
+│       │   └── <span class="file">SKILL.md</span>
+│       ├── <span class="folder">skill-builder/</span>
+│       │   ├── <span class="file">SKILL.md</span>
+│       │   └── <span class="file">reference.md</span>
+│       ├── <span class="folder">trigger-automation/</span>
+│       │   └── <span class="file">SKILL.md</span>
+│       ├── <span class="folder">video-script/</span>
+│       │   └── <span class="file">SKILL.md</span>
+│       ├── <span class="folder">visualizations/</span>
+│       │   └── <span class="file">SKILL.md</span>
+│       ├── <span class="folder">website-copy-extraction/</span>
+│       │   └── <span class="file">SKILL.md</span>
+│       └── <span class="folder">webinar/</span>               <span class="comment">← Webinar-specific skills</span>
+│           ├── <span class="file">orchestrator.md</span>
+│           ├── <span class="file">intro-skill.md</span>
+│           ├── <span class="file">content-skill.md</span>
+│           ├── <span class="file">offer-skill.md</span>
+│           └── <span class="file">overlay-upgrader.md</span>
+│
+├── <span class="folder">tools/</span>                            <span class="comment">← Python automation scripts</span>
+│   ├── <span class="file">pptx_animations.py</span>
+│   ├── <span class="file">pptx_progressive.py</span>
+│   ├── <span class="file">screenshot_proof.py</span>
+│   └── <span class="file">README.md</span>
+│
+├── <span class="folder">workflows/</span>                        <span class="comment">← Standard Operating Procedures</span>
+│   ├── <span class="file">webinar-landing-page.md</span>
+│   ├── <span class="file">webinar-ad-copy.md</span>
+│   ├── <span class="file">webinar-visual-assets.md</span>
+│   ├── <span class="file">webinar-slides.md</span>
+│   └── <span class="folder">webinar-copy/</span>                <span class="comment">← All webinar copy outputs</span>
+│
+├── <span class="folder">01-KNOWLEDGE/</span>                     <span class="comment">← Reference library (read-only)</span>
+│   ├── <span class="folder">copywriting-arsenal/</span>          <span class="comment">← 16 core files + extractions</span>
+│   │   ├── <span class="file">00 through 15 numbered files</span>
+│   │   ├── <span class="folder">book-extractions/</span>         <span class="comment">← 22 book extractions</span>
+│   │   ├── <span class="folder">swipe-analyses/</span>           <span class="comment">← 16 ad breakdowns</span>
+│   │   ├── <span class="folder">templates/</span>                <span class="comment">← Headlines + sales letter templates</span>
+│   │   ├── <span class="folder">word-craft-training/</span>      <span class="comment">← Fang Yuan + Jason word craft</span>
+│   │   └── <span class="folder">anatomy-log/</span>              <span class="comment">← Copy anatomy by type</span>
+│   └── <span class="folder">sales-page-analyses/</span>
+│
+├── <span class="folder">03-TOOLS/</span>                         <span class="comment">← Reusable prompts & templates</span>
+│   ├── <span class="folder">master-prompts/</span>
+│   ├── <span class="folder">website-clone-blueprints/</span>
+│   ├── <span class="folder">website-copy-extraction/</span>
+│   └── <span class="folder">file-compression/</span>
+│
+├── <span class="folder">webinar-library/</span>                  <span class="comment">← Webinar reference materials</span>
+│   ├── <span class="folder">voice/</span>                        <span class="comment">← Voice foundation</span>
+│   ├── <span class="folder">intro-section/</span>                <span class="comment">← Overlays + craft guides</span>
+│   ├── <span class="folder">content-section/</span>
+│   ├── <span class="folder">offer-section/</span>                <span class="comment">← 9 files (GOLD STANDARD)</span>
+│   ├── <span class="folder">avatars/</span>                      <span class="comment">← Phase B + C per project</span>
+│   └── <span class="folder">bonuses/</span>                      <span class="comment">← Bonus system definitions</span>
+│
+├── <span class="folder">brand-assets/</span>                     <span class="comment">← Logo, colors, typography</span>
+├── <span class="folder">images/</span>                           <span class="comment">← AI-generated images output</span>
+├── <span class="folder">prompts/</span>                          <span class="comment">← Image generation prompts log</span>
+└── <span class="folder">swipe-library/</span>                    <span class="comment">← Collected swipe files</span></div>
+
+
+<!-- ============ SECTION 6: WAT FRAMEWORK ============ -->
+<div class="page-break"></div>
+<h2 id="section6">Section 6: How the System Works</h2>
+
+<h3>The WAT Framework in Practice</h3>
+
+<p>Here's how a real task flows through the system:</p>
+
+<div class="box box-purple">
+  <strong>Example: "Create a Facebook ad for my webinar"</strong>
+  <ol>
+    <li><strong>Claude reads CLAUDE.md</strong> → sees that ad copy tasks should use the <code>ads/</code> skill</li>
+    <li><strong>Claude checks if copy-master should run first</strong> → yes, for any copy task, copy-master runs first (12-step intelligence system)</li>
+    <li><strong>copy-master produces a brief</strong> → identifies offer, researches market, diagnoses awareness level, selects emotional arc and framework</li>
+    <li><strong>ads skill takes the brief</strong> → generates 3 ad variations with different hook types</li>
+    <li><strong>If the ad needs an image</strong> → Claude routes to <code>nano-banana-images/</code> or <code>canvas-design</code></li>
+    <li><strong>Result:</strong> Complete ad package — copy + visuals — ready to post</li>
+  </ol>
+</div>
+
+<h3>Key Operating Rules</h3>
+<ol>
+  <li><strong>Look for existing tools first.</strong> Check <code>tools/</code> before building anything new.</li>
+  <li><strong>Learn and adapt when things fail.</strong> Read error, fix script, retest. Document what you learned.</li>
+  <li><strong>Keep workflows current.</strong> When you find better methods, update the workflow.</li>
+  <li><strong>Self-improvement loop:</strong> Identify break → fix tool → verify → update workflow → move on stronger.</li>
+  <li><strong>API keys in .env only.</strong> Never hardcode. Never log secret values.</li>
+</ol>
+
+<h3>Skill Routing — How Claude Decides What To Use</h3>
+<p>CLAUDE.md contains an "Invoke When" column for every skill. Claude matches your request to the right skill automatically. Examples:</p>
+<ul>
+  <li>"Write a sales page" → <code>copy-master</code> (first) → <code>sales-page</code></li>
+  <li>"Create webinar slides" → <code>webinar-slides</code></li>
+  <li>"Build a landing page" → <code>landing-page</code></li>
+  <li>"Generate a realistic photo" → <code>nano-banana-images</code></li>
+  <li>"Extract intelligence from this book" → <code>book-extraction</code></li>
+  <li>"Set up a cron job" → <code>trigger-automation</code></li>
+</ul>
+
+
+<!-- ============ SECTION 7: CONFIG FILES ============ -->
+<div class="page-break"></div>
+<h2 id="section7">Section 7: Configuration Files — What Each One Does</h2>
+
+<table>
+  <tr><th>File</th><th>Location</th><th>Purpose</th><th>Required?</th></tr>
+  <tr>
+    <td><code>CLAUDE.md</code></td>
+    <td>Project root</td>
+    <td>Master instruction file — tells Claude everything about the project</td>
+    <td><strong>YES — #1 priority</strong></td>
+  </tr>
+  <tr>
+    <td><code>.env</code></td>
+    <td>Project root</td>
+    <td>API keys and secrets</td>
+    <td>YES (for any API-powered features)</td>
+  </tr>
+  <tr>
+    <td><code>.claude/settings.json</code></td>
+    <td>.claude/</td>
+    <td>Global Claude Code permissions</td>
+    <td>YES</td>
+  </tr>
+  <tr>
+    <td><code>.claude/settings.local.json</code></td>
+    <td>.claude/</td>
+    <td>Local overrides (allowed websites, etc.)</td>
+    <td>Optional</td>
+  </tr>
+  <tr>
+    <td><code>.claude/mcp.json</code></td>
+    <td>.claude/</td>
+    <td>External service connections (Trigger.dev, etc.)</td>
+    <td>Only for automation</td>
+  </tr>
+  <tr>
+    <td><code>.gitignore</code></td>
+    <td>Project root</td>
+    <td>Prevents .env and other secrets from being committed</td>
+    <td>YES</td>
+  </tr>
+  <tr>
+    <td><code>trigger-ref.md</code></td>
+    <td>Project root</td>
+    <td>Trigger.dev SDK v4 code reference</td>
+    <td>Only for automation</td>
+  </tr>
+</table>
+
+
+<!-- ============ SECTION 8: TROUBLESHOOTING ============ -->
+<h2 id="section8">Section 8: Troubleshooting & FAQs</h2>
+
+<h4>Q: Claude doesn't know about my skills</h4>
+<p><strong>Fix:</strong> Check that CLAUDE.md exists in your project root AND lists the skills. Claude reads CLAUDE.md on every conversation start.</p>
+
+<h4>Q: A skill says "file not found"</h4>
+<p><strong>Fix:</strong> The skill expects files in specific folder paths. Make sure your folder structure matches Section 5 exactly. Run the mkdir command from Step 2 again.</p>
+
+<h4>Q: API calls are failing</h4>
+<p><strong>Fix:</strong> Check your .env file. Make sure the key names match exactly (no extra spaces). Test the key manually if possible.</p>
+
+<h4>Q: Python tools won't run</h4>
+<p><strong>Fix:</strong> Run <code>pip install python-pptx Pillow requests python-dotenv</code>. Make sure Python 3.10+ is installed: <code>python3 --version</code></p>
+
+<h4>Q: MCP server won't connect</h4>
+<p><strong>Fix:</strong> Make sure Node.js is installed (<code>node --version</code>). The MCP config uses npx which requires Node. Restart VS Code after adding mcp.json.</p>
+
+<h4>Q: Claude isn't following the rules I set</h4>
+<p><strong>Fix:</strong> Rules go in CLAUDE.md. Make sure they're clear, specific, and not contradicting each other. Claude re-reads CLAUDE.md each conversation.</p>
+
+<h4>Q: I want to add a new skill</h4>
+<p><strong>How:</strong> Use the <code>skill-builder</code> skill. Tell Claude: "Create a new skill for [what you need]." It will generate the SKILL.md with proper structure.</p>
+
+<h4>Q: How do I update an existing skill?</h4>
+<p><strong>How:</strong> Edit the SKILL.md file directly, or use skill-builder to audit and optimize it.</p>
+
+
+<!-- ============ SECTION 9: MASTER CHECKLIST ============ -->
+<div class="page-break"></div>
+<h2 id="section9">Section 9: Master Checklist</h2>
+
+<p>Print this page. Check off each item as you complete it.</p>
+
+<h3>Phase 1: Foundation</h3>
+<ul class="checklist">
+  <li>VS Code installed and working</li>
+  <li>Claude Code extension installed from VS Code marketplace</li>
+  <li>Node.js v18+ installed (<code>node --version</code> works)</li>
+  <li>Python 3.10+ installed (<code>python3 --version</code> works)</li>
+  <li>Git installed (<code>git --version</code> works)</li>
+  <li>Anthropic account active (API key or Claude Pro subscription)</li>
+</ul>
+
+<h3>Phase 2: Project Structure</h3>
+<ul class="checklist">
+  <li>Project folder created</li>
+  <li>Full folder structure created (Step 2 mkdir command)</li>
+  <li><code>.gitignore</code> created (includes <code>.env</code>)</li>
+</ul>
+
+<h3>Phase 3: Configuration</h3>
+<ul class="checklist">
+  <li><code>.claude/settings.json</code> created with read permissions</li>
+  <li><code>.claude/settings.local.json</code> created (even if empty)</li>
+  <li><code>.claude/mcp.json</code> created (if using automation)</li>
+  <li><code>.env</code> file created with required API keys</li>
+  <li><code>.env.example</code> created as template</li>
+</ul>
+
+<h3>Phase 4: Skills Installation</h3>
+<ul class="checklist">
+  <li>All 12 flat-file skills copied to <code>.claude/skills/</code></li>
+  <li>All 15 folder-based skills copied with their SKILL.md files</li>
+  <li>Webinar skills (5 files) copied to <code>.claude/skills/webinar/</code></li>
+  <li>Supporting files copied (copy-formula-router.md, STYLE_PRESETS.md, gemini.md, etc.)</li>
+</ul>
+
+<h3>Phase 5: Tools & Dependencies</h3>
+<ul class="checklist">
+  <li>Python packages installed (<code>pip install python-pptx Pillow requests python-dotenv</code>)</li>
+  <li>Tool scripts copied to <code>tools/</code> folder</li>
+</ul>
+
+<h3>Phase 6: CLAUDE.md (Brain File)</h3>
+<ul class="checklist">
+  <li>CLAUDE.md created in project root</li>
+  <li>Skills inventory section populated</li>
+  <li>Folder map section populated</li>
+  <li>Operating rules defined</li>
+  <li>Current project section filled in</li>
+</ul>
+
+<h3>Phase 7: Knowledge Base (Copywriting Only)</h3>
+<ul class="checklist">
+  <li>16 core arsenal files in <code>01-KNOWLEDGE/copywriting-arsenal/</code></li>
+  <li>Book extractions copied to <code>book-extractions/</code></li>
+  <li>Swipe analyses copied to <code>swipe-analyses/</code></li>
+  <li>Word craft training files copied</li>
+  <li>Templates and checklists copied</li>
+</ul>
+
+<h3>Phase 8: Verification</h3>
+<ul class="checklist">
+  <li>Claude recognizes skills when asked</li>
+  <li>At least one skill runs successfully</li>
+  <li>Folder structure is correct</li>
+  <li>API keys are accessible (if configured)</li>
+  <li>Python tools execute without errors</li>
+</ul>
+
+<div class="box box-green" style="margin-top: 30px; text-align: center;">
+  <strong style="font-size: 14pt;">ALL BOXES CHECKED? YOU'RE FULLY LOADED.</strong><br>
+  Your Claude Code is now a production-ready AI workspace.<br>
+  Start building. Start creating. Start shipping.
+</div>
+
+<div class="footer">
+  <p>Claude Code Complete Setup Guide — Version 1.0 — April 2026</p>
+  <p>Built from the VS-CODING VIA CLAUDE workspace</p>
+</div>
+
+</body>
+</html>

@@ -40,4 +40,8 @@ Written as a complete technical document using Claude Code itself — demonstrat
 
 ## File
 
-- `CLAUDE-CODE-SETUP-GUIDE.pdf` — The complete 47-page guide (1.2 MB)
+- `index.html` — The complete guide. Open in any browser to view.
+
+## How to View
+
+Download or clone this repo, then open `claude-code-setup-guide/index.html` in Chrome, Firefox, Safari, or any modern browser.
