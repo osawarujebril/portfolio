@@ -1,0 +1,1166 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VELOUR by Maison Aether — The Scent That Stays</title>
+  <meta name="description" content="VELOUR by Maison Aether. 147 days to compose. Seven raw ingredients. Three that exist in no other bottle on Earth.">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Outfit:wght@200;300;400;500&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
+
+  <style>
+    /* ══════════════════════════════════════════
+       DESIGN TOKENS
+    ══════════════════════════════════════════ */
+    :root {
+      --bg-void: #0A0A0A;
+      --bg-surface: #141414;
+      --bg-card: #1A1A1A;
+      --text-primary: #F4F1EA;
+      --text-secondary: rgba(244, 241, 234, 0.6);
+      --text-tertiary: rgba(244, 241, 234, 0.4);
+      --accent-gold: #C9A96E;
+      --accent-gold-dim: rgba(201, 169, 110, 0.3);
+      --accent-burgundy: #5C1A1A;
+      --font-display: 'Cormorant Garamond', Georgia, serif;
+      --font-body: 'Outfit', system-ui, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+      --ease-smooth: cubic-bezier(0.16, 1, 0.3, 1);
+      --shadow-gold: 0 20px 60px rgba(201, 169, 110, 0.15);
+      --shadow-deep: 0 30px 60px -5px rgba(0, 0, 0, 0.35);
+    }
+
+    /* ══════════════════════════════════════════
+       RESET & BASE
+    ══════════════════════════════════════════ */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { font-size: 16px; }
+
+    body {
+      background: var(--bg-void);
+      color: var(--text-primary);
+      font-family: var(--font-body);
+      font-weight: 300;
+      line-height: 1.7;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    ::selection {
+      background: var(--accent-gold);
+      color: var(--bg-void);
+    }
+
+    img, video { display: block; max-width: 100%; }
+
+    /* ══════════════════════════════════════════
+       SCROLL REVEAL SYSTEM
+    ══════════════════════════════════════════ */
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 1s var(--ease-smooth), transform 1s var(--ease-smooth);
+    }
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .reveal-delay-1 { transition-delay: 0.15s; }
+    .reveal-delay-2 { transition-delay: 0.3s; }
+    .reveal-delay-3 { transition-delay: 0.45s; }
+    .reveal-delay-4 { transition-delay: 0.6s; }
+
+    /* ══════════════════════════════════════════
+       TYPOGRAPHY
+    ══════════════════════════════════════════ */
+    .font-display { font-family: var(--font-display); }
+    .font-body { font-family: var(--font-body); }
+
+    h1, h2, h3 {
+      font-family: var(--font-display);
+      font-weight: 300;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+    }
+
+    /* ══════════════════════════════════════════
+       LAYOUT
+    ══════════════════════════════════════════ */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    .container-narrow {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    section {
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* ══════════════════════════════════════════
+       1. HERO SECTION
+    ══════════════════════════════════════════ */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 80px 24px 60px;
+      background: var(--bg-void);
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -20%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(201, 169, 110, 0.06) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .hero-product {
+      position: relative;
+      z-index: 1;
+      width: 280px;
+      max-width: 40vw;
+      margin-bottom: 48px;
+      filter: drop-shadow(0 20px 60px rgba(201, 169, 110, 0.15));
+      transition: transform 0.8s var(--ease-smooth);
+    }
+
+    .hero-product:hover {
+      transform: translateY(-8px);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      padding: 0 24px;
+    }
+
+    .hero-pre {
+      font-family: var(--font-body);
+      font-size: 0.85rem;
+      font-weight: 300;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent-gold);
+      margin-bottom: 32px;
+    }
+
+    .hero-title {
+      font-size: clamp(2.5rem, 7vw, 5.5rem);
+      font-weight: 300;
+      color: var(--text-primary);
+      margin-bottom: 32px;
+      line-height: 1.05;
+    }
+
+    .hero-sub {
+      font-family: var(--font-body);
+      font-size: clamp(0.9rem, 1.5vw, 1.1rem);
+      font-weight: 200;
+      color: var(--text-secondary);
+      max-width: 600px;
+      margin: 0 auto 48px;
+      line-height: 1.8;
+    }
+
+    .hero-cta {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      font-weight: 400;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: var(--accent-gold);
+      background: transparent;
+      padding: 18px 48px;
+      border: 1px solid var(--accent-gold-dim);
+      border-radius: 9999px;
+      transition: all 0.5s var(--ease-smooth);
+      cursor: pointer;
+    }
+
+    .hero-cta:hover {
+      background: rgba(201, 169, 110, 0.08);
+      color: var(--accent-gold);
+      border-color: var(--accent-gold);
+      box-shadow: 0 20px 60px rgba(201, 169, 110, 0.12);
+      transform: translateY(-2px);
+    }
+
+    .hero-scroll {
+      position: absolute;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      color: var(--text-tertiary);
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+    }
+
+    .hero-cta-wrapper {
+      margin-bottom: 80px;
+    }
+
+    .hero-scroll-line {
+      width: 1px;
+      height: 40px;
+      background: linear-gradient(to bottom, var(--accent-gold), transparent);
+      animation: scrollPulse 2s ease-in-out infinite;
+    }
+
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 0.3; transform: scaleY(0.6); }
+      50% { opacity: 1; transform: scaleY(1); }
+    }
+
+    /* ══════════════════════════════════════════
+       2. THE STORY SECTION
+    ══════════════════════════════════════════ */
+    .story {
+      padding: 160px 0;
+      background: var(--bg-void);
+    }
+
+    .story-label {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      font-weight: 400;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent-gold);
+      margin-bottom: 48px;
+    }
+
+    .story-text {
+      font-family: var(--font-display);
+      font-size: clamp(1.15rem, 2vw, 1.4rem);
+      font-weight: 300;
+      line-height: 1.9;
+      color: var(--text-primary);
+    }
+
+    .story-text p {
+      margin-bottom: 28px;
+    }
+
+    .story-text p:last-child {
+      margin-bottom: 0;
+    }
+
+    .story-text em {
+      font-style: italic;
+      color: var(--accent-gold);
+    }
+
+    .story-pullquote {
+      font-family: var(--font-display);
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      font-weight: 300;
+      font-style: italic;
+      color: var(--accent-gold);
+      line-height: 1.4;
+      margin: 48px 0;
+      padding: 32px 0;
+      border-top: 1px solid rgba(201, 169, 110, 0.15);
+      border-bottom: 1px solid rgba(201, 169, 110, 0.15);
+    }
+
+    /* ══════════════════════════════════════════
+       3. ATMOSPHERIC DIVIDER
+    ══════════════════════════════════════════ */
+    .divider {
+      position: relative;
+      height: 300px;
+      overflow: hidden;
+    }
+
+    .divider video {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .divider-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to bottom,
+        var(--bg-void) 0%,
+        transparent 30%,
+        transparent 70%,
+        var(--bg-void) 100%
+      );
+    }
+
+    /* ══════════════════════════════════════════
+       4. THE NOTES SECTION
+    ══════════════════════════════════════════ */
+    .notes {
+      padding: 160px 0;
+      background: var(--bg-void);
+    }
+
+    .notes-header {
+      text-align: center;
+      margin-bottom: 100px;
+    }
+
+    .notes-title {
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      color: var(--text-primary);
+      margin-bottom: 16px;
+    }
+
+    .notes-group {
+      margin-bottom: 80px;
+    }
+
+    .notes-group:last-child {
+      margin-bottom: 0;
+    }
+
+    .notes-group-label {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      font-weight: 400;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent-gold);
+      margin-bottom: 32px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid rgba(201, 169, 110, 0.12);
+    }
+
+    .notes-text {
+      font-family: var(--font-display);
+      font-size: clamp(1.05rem, 1.8vw, 1.25rem);
+      font-weight: 300;
+      line-height: 1.9;
+      color: var(--text-primary);
+    }
+
+    .notes-text p {
+      margin-bottom: 24px;
+    }
+
+    .notes-text strong {
+      font-weight: 400;
+      color: var(--accent-gold);
+    }
+
+    .notes-image-container {
+      margin: 80px 0;
+      position: relative;
+    }
+
+    .notes-image {
+      width: 100%;
+      height: 400px;
+      object-fit: cover;
+      opacity: 0.9;
+    }
+
+    .notes-image-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to right,
+        var(--bg-void) 0%,
+        transparent 20%,
+        transparent 80%,
+        var(--bg-void) 100%
+      );
+    }
+
+    /* ══════════════════════════════════════════
+       5. THE EXPERIENCE SECTION
+    ══════════════════════════════════════════ */
+    .experience {
+      padding: 0;
+      position: relative;
+    }
+
+    .experience-video-section {
+      position: relative;
+      height: 80vh;
+      min-height: 500px;
+      display: flex;
+      align-items: center;
+    }
+
+    .experience-video-section video {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .experience-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to right,
+        rgba(10, 10, 10, 0.85) 0%,
+        rgba(10, 10, 10, 0.5) 50%,
+        rgba(10, 10, 10, 0.3) 100%
+      );
+      z-index: 1;
+    }
+
+    .experience-content {
+      position: relative;
+      z-index: 2;
+      padding: 80px 0;
+    }
+
+    .experience-text {
+      font-family: var(--font-display);
+      font-size: clamp(1.1rem, 1.8vw, 1.35rem);
+      font-weight: 300;
+      line-height: 1.9;
+      color: var(--text-primary);
+      max-width: 600px;
+    }
+
+    .experience-text p {
+      margin-bottom: 28px;
+    }
+
+    .experience-highlight {
+      display: block;
+      font-family: var(--font-display);
+      font-size: clamp(1.5rem, 3vw, 2.5rem);
+      font-weight: 300;
+      font-style: italic;
+      color: var(--accent-gold);
+      margin: 48px 0;
+      line-height: 1.3;
+    }
+
+    .experience-wrist {
+      padding: 120px 0;
+      background: var(--bg-void);
+    }
+
+    .experience-wrist-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+    }
+
+    .experience-wrist-image {
+      width: 100%;
+      height: 400px;
+      object-fit: cover;
+    }
+
+    .experience-wrist-text {
+      font-family: var(--font-display);
+      font-size: clamp(1.05rem, 1.8vw, 1.25rem);
+      font-weight: 300;
+      line-height: 1.9;
+    }
+
+    .experience-wrist-text p {
+      margin-bottom: 24px;
+    }
+
+    .experience-stats {
+      display: flex;
+      gap: 48px;
+      margin-top: 40px;
+      padding-top: 40px;
+      border-top: 1px solid rgba(201, 169, 110, 0.15);
+    }
+
+    .experience-stat {
+      text-align: left;
+    }
+
+    .experience-stat-number {
+      font-family: var(--font-display);
+      font-size: 2.5rem;
+      font-weight: 300;
+      color: var(--accent-gold);
+      line-height: 1;
+    }
+
+    .experience-stat-label {
+      font-family: var(--font-body);
+      font-size: 0.75rem;
+      font-weight: 300;
+      letter-spacing: 0.1em;
+      color: var(--text-tertiary);
+      margin-top: 8px;
+    }
+
+    /* ══════════════════════════════════════════
+       6. TESTIMONIALS
+    ══════════════════════════════════════════ */
+    .testimonials {
+      padding: 160px 0;
+      background: var(--bg-surface);
+    }
+
+    .testimonials-header {
+      text-align: center;
+      margin-bottom: 80px;
+    }
+
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 40px;
+    }
+
+    .testimonial-card {
+      padding: 40px;
+      border: 1px solid rgba(201, 169, 110, 0.08);
+      background: var(--bg-card);
+      border-radius: 16px;
+      transition: all 0.5s var(--ease-smooth);
+    }
+
+    .testimonial-card:hover {
+      border-color: var(--accent-gold-dim);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      transform: translateY(-4px);
+    }
+
+    .testimonial-quote {
+      font-family: var(--font-display);
+      font-size: 1.05rem;
+      font-weight: 300;
+      font-style: italic;
+      line-height: 1.8;
+      color: var(--text-primary);
+      margin-bottom: 24px;
+    }
+
+    .testimonial-author {
+      font-family: var(--font-body);
+      font-size: 0.8rem;
+      font-weight: 400;
+      letter-spacing: 0.1em;
+      color: var(--accent-gold);
+    }
+
+    /* ══════════════════════════════════════════
+       7. AS SEEN IN
+    ══════════════════════════════════════════ */
+    .press {
+      padding: 80px 0;
+      background: var(--bg-void);
+      border-top: 1px solid rgba(244, 241, 234, 0.05);
+      border-bottom: 1px solid rgba(244, 241, 234, 0.05);
+    }
+
+    .press-logos {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 60px;
+      flex-wrap: wrap;
+    }
+
+    .press-logo {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      font-weight: 300;
+      letter-spacing: 0.1em;
+      color: var(--text-tertiary);
+      transition: color 0.3s ease;
+      white-space: nowrap;
+    }
+
+    .press-logo:hover {
+      color: var(--text-primary);
+    }
+
+    .press-logo-italic {
+      font-style: italic;
+    }
+
+    /* ══════════════════════════════════════════
+       8. THE OFFER SECTION
+    ══════════════════════════════════════════ */
+    .offer {
+      padding: 160px 0;
+      background: var(--bg-void);
+    }
+
+    .offer-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+
+    .offer-image {
+      width: 100%;
+      object-fit: cover;
+    }
+
+    .offer-content h2 {
+      font-size: clamp(1.8rem, 3vw, 2.8rem);
+      margin-bottom: 16px;
+    }
+
+    .offer-subtitle {
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      font-weight: 300;
+      color: var(--text-secondary);
+      margin-bottom: 40px;
+      line-height: 1.7;
+    }
+
+    .offer-price {
+      font-family: var(--font-display);
+      font-size: clamp(3rem, 5vw, 4.5rem);
+      font-weight: 300;
+      color: var(--accent-gold);
+      margin-bottom: 24px;
+      line-height: 1;
+    }
+
+    .offer-text {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      font-weight: 300;
+      line-height: 1.8;
+      color: var(--text-primary);
+      margin-bottom: 32px;
+    }
+
+    .offer-text p {
+      margin-bottom: 20px;
+    }
+
+    .offer-scarcity {
+      font-family: var(--font-body);
+      font-size: 0.85rem;
+      font-weight: 300;
+      color: var(--text-secondary);
+      padding: 16px 0;
+      border-top: 1px solid rgba(201, 169, 110, 0.15);
+      border-bottom: 1px solid rgba(201, 169, 110, 0.15);
+      margin-bottom: 40px;
+    }
+
+    .offer-cta {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      font-weight: 400;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: var(--bg-void);
+      background: var(--accent-gold);
+      padding: 20px 48px;
+      border: none;
+      border-radius: 9999px;
+      transition: all 0.5s var(--ease-smooth);
+      cursor: pointer;
+    }
+
+    .offer-cta:hover {
+      background: #D4B878;
+      transform: translateY(-2px);
+      box-shadow: 0 20px 60px rgba(201, 169, 110, 0.3);
+    }
+
+    .offer-shipping {
+      font-family: var(--font-body);
+      font-size: 0.8rem;
+      font-weight: 300;
+      color: var(--text-tertiary);
+      margin-top: 16px;
+    }
+
+    /* ══════════════════════════════════════════
+       9. GUARANTEE
+    ══════════════════════════════════════════ */
+    .guarantee {
+      padding: 80px 0;
+      background: var(--bg-surface);
+      text-align: center;
+    }
+
+    .guarantee-text {
+      font-family: var(--font-display);
+      font-size: clamp(1.1rem, 1.8vw, 1.3rem);
+      font-weight: 300;
+      line-height: 1.9;
+      color: var(--text-primary);
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .guarantee-text p {
+      margin-bottom: 20px;
+    }
+
+    .guarantee-stat {
+      font-family: var(--font-body);
+      font-size: 0.85rem;
+      font-weight: 300;
+      color: var(--text-secondary);
+      margin-top: 32px;
+      font-style: italic;
+    }
+
+    /* ══════════════════════════════════════════
+       10. FOOTER
+    ══════════════════════════════════════════ */
+    .footer {
+      padding: 60px 0;
+      background: var(--bg-void);
+      text-align: center;
+      border-top: 1px solid rgba(244, 241, 234, 0.05);
+    }
+
+    .footer-brand {
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      font-weight: 300;
+      letter-spacing: 0.15em;
+      color: var(--text-tertiary);
+      margin-bottom: 8px;
+    }
+
+    .footer-location {
+      font-family: var(--font-body);
+      font-size: 0.75rem;
+      font-weight: 300;
+      color: var(--text-tertiary);
+      letter-spacing: 0.1em;
+    }
+
+    .footer-copy {
+      font-family: var(--font-body);
+      font-size: 0.7rem;
+      color: rgba(244, 241, 234, 0.2);
+      margin-top: 24px;
+    }
+
+    /* ══════════════════════════════════════════
+       RESPONSIVE
+    ══════════════════════════════════════════ */
+    @media (max-width: 768px) {
+      .experience-wrist-grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+
+      .testimonials-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .offer-grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+
+      .experience-stats {
+        gap: 32px;
+      }
+
+      .press-logos {
+        gap: 32px;
+      }
+
+      .divider {
+        height: 200px;
+      }
+
+      .notes-image {
+        height: 250px;
+      }
+
+      .hero-scroll {
+        display: none;
+      }
+
+      section {
+        padding-left: 0;
+        padding-right: 0;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .experience-stats {
+        flex-direction: column;
+        gap: 24px;
+      }
+
+      .hero-cta, .offer-cta {
+        padding: 16px 36px;
+        font-size: 0.85rem;
+      }
+    }
+
+    /* ══════════════════════════════════════════
+       PREFERS REDUCED MOTION
+    ══════════════════════════════════════════ */
+    @media (prefers-reduced-motion: reduce) {
+      .reveal {
+        opacity: 1;
+        transform: none;
+        transition: none;
+      }
+      .hero-scroll-line {
+        animation: none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ═══════════════════════════════════════
+       1. HERO
+  ═══════════════════════════════════════ -->
+  <section class="hero">
+    <p class="hero-pre reveal">You've worn the expensive ones. You know the difference between good and forgettable.</p>
+
+    <img src="images/velour/hero-bottle-branded.jpg" alt="VELOUR by Maison Aether" class="hero-product reveal reveal-delay-1">
+
+    <div class="hero-content">
+      <h1 class="hero-title reveal reveal-delay-2">The Scent That Stays<br>After You've Left the Room.</h1>
+      <p class="hero-sub reveal reveal-delay-3">147 days to compose. Seven raw ingredients. Three that exist in no other bottle on Earth. One question you'll hear for the rest of your life.</p>
+      <div class="hero-cta-wrapper">
+        <a href="#offer" class="hero-cta reveal reveal-delay-4">Discover Velour</a>
+      </div>
+    </div>
+
+    <div class="hero-scroll">
+      <span>Scroll</span>
+      <div class="hero-scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════
+       2. THE STORY
+  ═══════════════════════════════════════ -->
+  <section class="story">
+    <div class="container-narrow">
+      <p class="story-label reveal">The Story</p>
+
+      <div class="story-text">
+        <p class="reveal">There is a perfumer in Grasse who turned down six figures in contracts last year.</p>
+
+        <p class="reveal">His father spent forty years building fragrances for department store shelves. Every one ended up on a cardboard tester between the escalator and the parking garage. Sprayed by strangers who forgot the name before they reached their car. Forty years of craft, marked down to half price every December.</p>
+
+        <p class="reveal">So the son stopped. Walked away entirely. Two years of silence.</p>
+
+        <p class="story-pullquote reveal">What would a fragrance have to do to make someone close their eyes?</p>
+
+        <p class="reveal">He didn't care about "nice." He'd spent his whole career watching "fresh" and "clean" and "sophisticated" sell millions of bottles that nobody remembered wearing. He wanted something that landed somewhere before language — where a scent becomes a memory before you've finished breathing it in.</p>
+
+        <p class="reveal">VELOUR took him 147 days. He kept reaching for that three-second window after you've embraced someone and pulled away — when their scent is still on your collar and the world briefly belongs to just the two of you.</p>
+
+        <p class="reveal">He found it at 4 AM on a Tuesday in November. And when he finally inhaled what he'd made, he sat down. Because he knew this would never sit on a department store shelf.</p>
+
+        <p class="reveal"><em>What's inside it wouldn't let him.</em></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════
+       ATMOSPHERIC DIVIDER
+  ═══════════════════════════════════════ -->
+  <div class="divider">
+    <video autoplay muted loop playsinline>
+      <source src="images/velour/videos/atmospheric-gold.mp4" type="video/mp4">
+    </video>
+    <div class="divider-overlay"></div>
+  </div>
+
+  <!-- ═══════════════════════════════════════
+       3. THE NOTES
+  ═══════════════════════════════════════ -->
+  <section class="notes">
+    <div class="container-narrow">
+      <div class="notes-header reveal">
+        <p class="story-label">What's Inside</p>
+        <h2 class="notes-title">The Notes</h2>
+      </div>
+
+      <!-- Top Notes -->
+      <div class="notes-group reveal">
+        <p class="notes-group-label">The First Three Seconds</p>
+        <div class="notes-text">
+          <p>Bergamot from Calabria, harvested while the fruit is still green. Dense and bitter — nothing like the bright citrus on a duty-free tester. This is the bergamot you feel before you name. The one that makes someone across the room glance up without knowing why.</p>
+          <p>That's the first three seconds. Before they've taken a step toward you.</p>
+          <p>Black pepper from Madagascar. The kind that prickles the back of your neck before you've registered the scent.</p>
+        </div>
+      </div>
+
+      <!-- Ingredients Image -->
+      <div class="notes-image-container reveal">
+        <img src="images/velour/ingredients.jpg" alt="VELOUR raw ingredients — oud, jasmine, bergamot, rose, vanilla, ambergris" class="notes-image">
+        <div class="notes-image-overlay"></div>
+      </div>
+
+      <!-- Heart Notes -->
+      <div class="notes-group reveal">
+        <p class="notes-group-label">Minutes Four Through Thirty</p>
+        <div class="notes-text">
+          <p>This is where most fragrances collapse. Top notes fade. What's left is chemical sweetness pretending to be depth. The spray impressed you. Twenty minutes later you're sniffing your wrist wondering where it went.</p>
+          <p><strong>VELOUR deepens.</strong></p>
+          <p>Jasmine Sambac from Tamil Nadu, hand-picked at night because the flowers release their full oil only in darkness. The word "floral" doesn't reach it. This is intimate. The way someone smells when they lean close enough that you feel their breath but they haven't touched you yet.</p>
+          <p>Rose absolute from Turkey. Petals dried in afternoon sun on old stone walls until the scent concentrates into something almost edible.</p>
+        </div>
+      </div>
+
+      <!-- Base Notes -->
+      <div class="notes-group reveal">
+        <p class="notes-group-label">Hour Two Until Tomorrow Morning</p>
+        <div class="notes-text">
+          <p>Oud from Assam. Aged six years. You won't think "wood." You'll think warmth — fireplace in a house you haven't visited since childhood. The kind of warmth that makes someone reach for your arm without knowing why.</p>
+          <p>Ambergris — the rarest fixative in perfumery. It doesn't have its own scent so much as it has gravity. It pulls every other note closer to your skin and holds them there.</p>
+          <p>Vanilla absolute from Madagascar. Forget sweet. This is warm. The difference between sugar and candlelight.</p>
+          <p><em>That's what holds it all together. That's what you'll smell at hour twelve.</em></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════
+       4. THE EXPERIENCE — Video Section
+  ═══════════════════════════════════════ -->
+  <section class="experience">
+    <div class="experience-video-section">
+      <img src="images/velour/lifestyle.jpg" alt="Intimate portrait — the scent zone" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
+      <div class="experience-overlay"></div>
+
+      <div class="container experience-content">
+        <p class="story-label reveal">The Experience</p>
+        <div class="experience-text">
+          <p class="reveal">You spray it once. Right here — where your pulse meets the air.</p>
+          <p class="reveal">For a moment — nothing. That silence is deliberate. VELOUR doesn't fill a room the way department store fragrances do, arriving before you, lingering like an argument after you leave. This one waits. It needs your skin's warmth to unlock. Your specific chemistry to become what it's supposed to become.</p>
+          <span class="experience-highlight reveal">Ninety seconds. Now breathe.</span>
+          <p class="reveal">What you're wearing has stopped being a fragrance. It's atmosphere now. The space between you and everyone else in the room — and only you are producing it.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Wrist Section -->
+    <div class="experience-wrist">
+      <div class="container">
+        <div class="experience-wrist-grid">
+          <img src="images/velour/wrist-spray.jpg" alt="Golden perfume mist on wrist" class="experience-wrist-image reveal">
+          <div class="reveal">
+            <div class="experience-wrist-text">
+              <p>They won't smell the room differently. They'll smell <em>you</em> differently. And only when they come close enough.</p>
+              <p>This is what you wear to the meeting where you get the callback and can't explain why. To the dinner where they lean in mid-sentence and forget what they were about to say. To the morning after, when the pillow carries something they can't name but refuse to wash away.</p>
+            </div>
+            <div class="experience-stats">
+              <div class="experience-stat">
+                <div class="experience-stat-number">3</div>
+                <div class="experience-stat-label">Sprays</div>
+              </div>
+              <div class="experience-stat">
+                <div class="experience-stat-number">14</div>
+                <div class="experience-stat-label">Hours</div>
+              </div>
+              <div class="experience-stat">
+                <div class="experience-stat-number">5</div>
+                <div class="experience-stat-label">Months per bottle</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════
+       ATMOSPHERIC DIVIDER 2
+  ═══════════════════════════════════════ -->
+  <div class="divider">
+    <video autoplay muted loop playsinline>
+      <source src="images/velour/videos/atmospheric-gold.mp4" type="video/mp4">
+    </video>
+    <div class="divider-overlay"></div>
+  </div>
+
+  <!-- ═══════════════════════════════════════
+       5. TESTIMONIALS
+  ═══════════════════════════════════════ -->
+  <section class="testimonials">
+    <div class="container">
+      <div class="testimonials-header">
+        <p class="story-label reveal">What They Say</p>
+        <h2 class="notes-title reveal reveal-delay-1">Those Who Wear It</h2>
+      </div>
+
+      <div class="testimonials-grid">
+        <div class="testimonial-card reveal">
+          <p class="testimonial-quote">"I've spent more on fragrance in the last decade than most people spend on furniture. Tom Ford, Creed, MFK — all of them. VELOUR is the first one that made a stranger stop me on the street. She didn't compliment me. She asked me to write down what I was wearing. Had her phone out, ready to order it before I finished spelling the name."</p>
+          <p class="testimonial-author">Adaeze O. — Lagos</p>
+        </div>
+
+        <div class="testimonial-card reveal reveal-delay-1">
+          <p class="testimonial-quote">"My husband wore it to dinner with friends. Three women asked about it before the main course arrived. Two ordered it from their phones before dessert."</p>
+          <p class="testimonial-author">Sarah M. — London</p>
+        </div>
+
+        <div class="testimonial-card reveal reveal-delay-2">
+          <p class="testimonial-quote">"I don't know how to describe what it smells like. It doesn't smell like anything I've smelled before. It smells like the feeling of being the person people remember."</p>
+          <p class="testimonial-author">Thomas K. — Paris</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════
+       6. AS SEEN IN
+  ═══════════════════════════════════════ -->
+  <section class="press">
+    <div class="container">
+      <div class="press-logos reveal">
+        <span class="press-logo press-logo-italic">Vogue</span>
+        <span class="press-logo">GQ</span>
+        <span class="press-logo press-logo-italic">Esquire</span>
+        <span class="press-logo">Harper's Bazaar</span>
+        <span class="press-logo press-logo-italic">Wallpaper*</span>
+        <span class="press-logo">Monocle</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════
+       7. THE OFFER
+  ═══════════════════════════════════════ -->
+  <section class="offer" id="offer">
+    <div class="container">
+      <div class="offer-grid">
+        <img src="images/velour/unboxing.jpg" alt="VELOUR unboxing — black linen box with perfume bottle" class="offer-image reveal">
+
+        <div class="offer-content">
+          <p class="story-label reveal">The Offer</p>
+          <h2 class="reveal reveal-delay-1">VELOUR</h2>
+          <p class="offer-subtitle reveal reveal-delay-1">by Maison Aether</p>
+
+          <p class="offer-text reveal reveal-delay-2">75ml Eau de Parfum. Hand-numbered. Black linen box with magnetic closure, wrapped in unbleached tissue that carries a single drop of the fragrance — the experience begins before you've opened anything.</p>
+
+          <div class="offer-price reveal reveal-delay-2">$285</div>
+
+          <div class="offer-text reveal reveal-delay-3">
+            <p>You already know what $285 buys at a department store counter — another bottle that smells like a variation of the last four you owned, another name you'll forget by next season.</p>
+            <p>147 days of one man's obsession. Distilled into 75 millilitres. A scent that doesn't exist on any shelf in any department store in any city on Earth.</p>
+          </div>
+
+          <p class="offer-scarcity reveal reveal-delay-3">Each batch produces 400 bottles. When this run is gone, the next won't arrive for eleven weeks — the jasmine blooms on its own schedule.</p>
+
+          <a href="#" class="offer-cta reveal reveal-delay-4">Order Velour — Free Worldwide Shipping</a>
+          <p class="offer-shipping reveal reveal-delay-4">Ships within 48 hours. Arrives in 3-5 days.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════
+       8. GUARANTEE
+  ═══════════════════════════════════════ -->
+  <section class="guarantee">
+    <div class="container-narrow">
+      <p class="story-label reveal">The Promise</p>
+      <div class="guarantee-text">
+        <p class="reveal">Spray it. Wear it for a full week. If nobody leans in — if nobody asks what you're wearing — send it back. Full refund. We cover return shipping. Nothing to fill out. Nothing to explain.</p>
+      </div>
+      <p class="guarantee-stat reveal reveal-delay-1">In fourteen months, out of 2,300 bottles shipped, eleven came back. Four of those customers reordered within sixty days.</p>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════
+       FOOTER
+  ═══════════════════════════════════════ -->
+  <footer class="footer">
+    <p class="footer-brand">VELOUR</p>
+    <p class="footer-location">Maison Aether — Grasse, France</p>
+    <p class="footer-copy">&copy; 2026 Maison Aether. All rights reserved.</p>
+  </footer>
+
+  <!-- ═══════════════════════════════════════
+       JAVASCRIPT — Scroll Reveal
+  ═══════════════════════════════════════ -->
+  <script>
+    // Scroll Reveal Observer
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('active');
+        }
+      });
+    }, {
+      threshold: 0.15,
+      rootMargin: '0px 0px -50px 0px'
+    });
+
+    document.querySelectorAll('.reveal').forEach(el => {
+      revealObserver.observe(el);
+    });
+
+    // Smooth scroll for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+
+    // Subtle parallax on hero product image
+    window.addEventListener('scroll', () => {
+      const product = document.querySelector('.hero-product');
+      if (product) {
+        const scrolled = window.pageYOffset;
+        const heroHeight = document.querySelector('.hero').offsetHeight;
+        if (scrolled < heroHeight) {
+          product.style.transform = `translateY(${scrolled * 0.15}px)`;
+          product.style.opacity = 1 - (scrolled / heroHeight) * 0.5;
+        }
+      }
+    }, { passive: true });
+  </script>
+
+</body>
+</html>
