@@ -16,6 +16,8 @@ Python tool that injects click-to-reveal animations into PowerPoint presentation
 ### [AI Image Generator](./ai-image-generator/)
 Python scripts that interface with the Kie.ai API to generate hyper-realistic AI images from structured JSON prompts. Supports image generation, editing, and image-to-video conversion.
 
+### [Claude Code Complete Setup Guide](./claude-code-setup-guide/)
+A 47-page technical documentation guide that takes a fresh VS Code + Claude Code installation from zero to a fully-equipped AI-powered production environment. Covers 22+ skills, 70+ knowledge files, Python automation tools, and the WAT Framework architecture.
 
 ## About
 
