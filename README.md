@@ -23,9 +23,12 @@ Python scripts that connect to the Kie.ai API to generate realistic images from 
 ### [Claude Code Complete Setup Guide](./claude-code-setup-guide/)
 A 47-page documentation guide that takes a fresh VS Code and Claude Code installation from zero to a fully working AI-assisted environment. Covers setup, skills, knowledge files, and workflow.
 
+### [AI Workflow Proof Map](./ai-workflow-proof-map/)
+An evidence-backed, readable portfolio artefact showing how I use AI to diagnose workflow friction, preserve context, verify outputs, learn from errors and produce usable handoffs. Includes clear claim boundaries rather than inflated AI-engineering claims.
+
 ## About
 
-I am a DVM student at the University of Life Sciences in Lublin, Poland, graduating June 2026. I am not a developer by training. What interests me is how far a curious, non-technical person can get by working hand-in-hand with AI tools, and these projects are the answer so far. I use AI tools every day, for building, writing, and research.
+I am a Doctor of Veterinary Medicine graduate from the University of Life Sciences in Lublin, Poland; I graduated in March 2026. I am not a developer by training. What interests me is how far a curious, non-technical person can get by working hand-in-hand with AI tools, and these projects are the answer so far. I use AI tools every day, for building, writing, and research.
 
 ## Contact
 
