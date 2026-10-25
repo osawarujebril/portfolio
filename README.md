@@ -23,6 +23,9 @@ Python scripts that connect to the Kie.ai API to generate realistic images from 
 ### [Claude Code Complete Setup Guide](./claude-code-setup-guide/)
 A 47-page documentation guide that takes a fresh VS Code and Claude Code installation from zero to a fully working AI-assisted environment. Covers setup, skills, knowledge files, and workflow.
 
+### [Voice and Motion Work](./voice-and-motion-work/)
+A narrated story ad voiced with ElevenLabs through the API, and a short motion piece written entirely in code. Watch them in the browser: https://osawarujebril.github.io/portfolio/voice-and-motion-work/
+
 ### [AI Workflow Proof Map](./ai-workflow-proof-map/)
 An evidence-backed, readable portfolio artefact showing how I use AI to diagnose workflow friction, preserve context, verify outputs, learn from errors and produce usable handoffs. Includes clear claim boundaries rather than inflated AI-engineering claims.
 

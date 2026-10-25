@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Voice and Motion Work | Jebril Osawaru</title>
+<style>
+  :root { --bg:#fafaf8; --ink:#1c1c1c; --muted:#555; --line:#ddd; }
+  @media (prefers-color-scheme: dark) { :root { --bg:#141414; --ink:#eee; --muted:#aaa; --line:#333; } }
+  body { margin:0; background:var(--bg); color:var(--ink); font:17px/1.6 -apple-system, "Segoe UI", Arial, sans-serif; }
+  main { max-width:860px; margin:0 auto; padding:40px 16px 64px; }
+  h1 { font-size:30px; margin:0 0 6px; }
+  h2 { font-size:21px; margin:44px 0 6px; }
+  p { margin:0 0 12px; }
+  .muted { color:var(--muted); }
+  video { display:block; width:100%; border-radius:8px; background:#000; margin:14px 0 10px; }
+  .tall { max-width:380px; }
+  ul { padding-left:20px; margin:0; }
+  li { margin:4px 0; }
+  footer { margin-top:56px; padding-top:16px; border-top:1px solid var(--line); color:var(--muted); font-size:15px; }
+  a { color:inherit; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Voice and Motion Work</h1>
+  <p class="muted">Jebril Osawaru · pieces I made on my own, directing AI tools from the command line.</p>
+
+  <h2>GSM story reel (76 seconds)</h2>
+  <p>A narrated story ad for my book. It starts from a 1989 Nigerian newspaper headline, "Telephone is not for the poor", and asks who really bought the phones when GSM arrived.</p>
+  <video class="tall" controls preload="metadata" playsinline poster="gsm-story-reel.jpg" src="gsm-story-reel.mp4"></video>
+  <ul>
+    <li><b>Voice:</b> ElevenLabs Eleven v4, generated through the API with my own command-line tool. I picked the narrator from auditions and confirmed the voice ID through the API.</li>
+    <li><b>Checked word by word:</b> every take was transcribed back. A take that dropped or repeated words was rejected, and a hard local name was respelled until it was read correctly.</li>
+    <li><b>Sound:</b> voice, effects and music mixed to -14 LUFS.</li>
+    <li><b>Pictures and motion:</b> AI-generated panels, animated and timed to the voice in code (HyperFrames).</li>
+  </ul>
+
+  <h2>RISE AGAIN (10 seconds)</h2>
+  <p>A short motion piece. Every frame and every sound is written in code.</p>
+  <video controls preload="metadata" playsinline poster="rise-again.jpg" src="rise-again.mp4"></video>
+
+  <footer>More projects: <a href="https://github.com/osawarujebril/portfolio">github.com/osawarujebril/portfolio</a> · osawarujebril@gmail.com</footer>
+</main>
+</body>
+</html>
